@@ -6,7 +6,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   const handleAnalyzeClick = () => {
-    navigate('/dashboard-overview');
+    navigate('/login');
   };
 
   const scrollToHowItWorks = () => {
