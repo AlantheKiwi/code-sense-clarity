@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -12,6 +11,10 @@ import Connect from "./pages/Connect";
 import Dashboard from "./pages/Dashboard";
 import DashboardOverview from "./pages/DashboardOverview";
 import PlatformHealth from "./pages/PlatformHealth";
+import Team from "./pages/Team";
+import Learning from "./pages/Learning";
+import Experts from "./pages/Experts";
+import Integrations from "./pages/Integrations";
 import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
 
@@ -40,6 +43,31 @@ const App = () => (
             <Route path="/dashboard-overview" element={
               <ProtectedRoute>
                 <DashboardOverview />
+              </ProtectedRoute>
+            } />
+            <Route path="/platform-health" element={
+              <ProtectedRoute>
+                <PlatformHealth />
+              </ProtectedRoute>
+            } />
+            <Route path="/team" element={
+              <ProtectedRoute>
+                <Team />
+              </ProtectedRoute>
+            } />
+            <Route path="/learning" element={
+              <ProtectedRoute>
+                <Learning />
+              </ProtectedRoute>
+            } />
+            <Route path="/experts" element={
+              <ProtectedRoute>
+                <Experts />
+              </ProtectedRoute>
+            } />
+            <Route path="/integrations" element={
+              <ProtectedRoute>
+                <Integrations />
               </ProtectedRoute>
             } />
             <Route path="/analysis/:repoName" element={

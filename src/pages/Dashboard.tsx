@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { UserMenu } from "@/components/UserMenu";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import SubscriptionBanner from "@/components/SubscriptionBanner";
 
 interface Repository {
   id: number;
@@ -121,6 +121,34 @@ const Dashboard = () => {
                 <Shield className="mr-2 h-4 w-4" />
                 Platform Health
               </Button>
+              <Button 
+                variant="ghost" 
+                className="text-gray-600 hover:text-gray-700"
+                onClick={() => navigate('/team')}
+              >
+                Team
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="text-gray-600 hover:text-gray-700"
+                onClick={() => navigate('/learning')}
+              >
+                Learning
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="text-gray-600 hover:text-gray-700"
+                onClick={() => navigate('/experts')}
+              >
+                Experts
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="text-gray-600 hover:text-gray-700"
+                onClick={() => navigate('/integrations')}
+              >
+                Integrations
+              </Button>
             </div>
             <div className="flex items-center space-x-4">
               <UserMenu />
@@ -130,6 +158,10 @@ const Dashboard = () => {
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Subscription Banner */}
+        <SubscriptionBanner currentTier="Free" />
+
+        {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Your Repositories
