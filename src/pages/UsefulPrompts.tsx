@@ -12,7 +12,7 @@ const UsefulPrompts = () => {
       id: 'lovable',
       name: 'Lovable',
       description: 'AI-powered React app builder with instant preview',
-      prompts: 1,
+      prompts: 5,
       difficulty: 'Beginner',
       category: 'AI-Powered Builders',
       icon: Code,
@@ -109,6 +109,9 @@ const UsefulPrompts = () => {
     }
   ];
 
+  // Calculate total prompts
+  const totalPrompts = platforms.reduce((sum, platform) => sum + platform.prompts, 0);
+
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'Beginner': return 'bg-green-100 text-green-800';
@@ -172,7 +175,7 @@ const UsefulPrompts = () => {
             <div className="flex items-center justify-center space-x-8 text-white/60">
               <div className="flex items-center">
                 <Star className="w-5 h-5 text-yellow-400 mr-2" />
-                <span>9 Prompts</span>
+                <span>{totalPrompts} Prompts</span>
               </div>
               <div className="flex items-center">
                 <Users className="w-5 h-5 text-blue-400 mr-2" />
