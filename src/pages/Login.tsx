@@ -3,8 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Github, Code } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
+import { useState } from "react";
 
 const Login = () => {
+  const { signInWithGitHub } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleGitHubSignIn = async () => {
+    try {
+      setIsLoading(true);
+      await signInWithGitHub();
+    } catch (error) {
+      console.error('GitHub sign-in error:', error);
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full">
@@ -29,9 +44,11 @@ const Login = () => {
             <Button 
               className="w-full bg-gray-900 hover:bg-gray-800 text-white py-3"
               size="lg"
+              onClick={handleGitHubSignIn}
+              disabled={isLoading}
             >
               <Github className="mr-2 h-5 w-5" />
-              Sign in with GitHub
+              {isLoading ? 'Connecting...' : 'Sign in with GitHub'}
             </Button>
             
             <div className="text-center text-sm text-gray-500">
