@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -101,7 +100,15 @@ const Analysis = () => {
         .order('issue_type', { ascending: true });
 
       if (error) throw error;
-      setIssues(issuesData || []);
+      
+      // Type cast the data to ensure TypeScript compatibility
+      const typedIssues = (issuesData || []).map(issue => ({
+        ...issue,
+        issue_type: issue.issue_type as 'critical' | 'warning' | 'suggestion',
+        difficulty_level: issue.difficulty_level as 'easy' | 'medium' | 'hard' | null
+      }));
+      
+      setIssues(typedIssues);
     } catch (error) {
       console.error('Error fetching issues:', error);
       toast({
@@ -151,7 +158,7 @@ const Analysis = () => {
 
       if (analysisError) throw analysisError;
 
-      // Save issues
+      // Save issues with proper typing
       const issuesData = mockAnalysis.issues.map((issue: any) => ({
         ...issue,
         analysis_id: analysisRecord.id,
@@ -164,7 +171,15 @@ const Analysis = () => {
       if (issuesError) throw issuesError;
 
       setAnalysisData(analysisRecord);
-      setIssues(issuesData);
+      
+      // Type cast the issues data when setting state
+      const typedIssues = issuesData.map(issue => ({
+        ...issue,
+        issue_type: issue.issue_type as 'critical' | 'warning' | 'suggestion',
+        difficulty_level: issue.difficulty_level as 'easy' | 'medium' | 'hard' | null
+      }));
+      
+      setIssues(typedIssues);
       
       toast({
         title: "Analysis Complete",
