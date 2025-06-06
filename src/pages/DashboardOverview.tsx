@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -22,7 +21,7 @@ import {
 import { 
   Code, 
   Settings, 
-  Help, 
+  HelpCircle, 
   User, 
   LogOut, 
   TrendingUp, 
@@ -176,7 +175,7 @@ const DashboardOverview = () => {
                   Settings
                 </Button>
                 <Button variant="ghost" className="text-white/70 hover:text-white">
-                  <Help className="mr-2 h-4 w-4" />
+                  <HelpCircle className="mr-2 h-4 w-4" />
                   Help
                 </Button>
               </div>
