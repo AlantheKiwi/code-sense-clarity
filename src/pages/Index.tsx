@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -72,6 +73,86 @@ const Index = () => {
           <circle cx="600" cy="400" r="4" fill="#a78bfa" className="animate-pulse delay-500" />
           <circle cx="800" cy="200" r="4" fill="#06b6d4" className="animate-pulse delay-1000" />
         </svg>
+
+        {/* Prominent Touching Hands SVG */}
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          <svg width="600" height="300" viewBox="0 0 600 300" className="opacity-20">
+            <defs>
+              <linearGradient id="handGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#60a5fa" />
+                <stop offset="50%" stopColor="#a78bfa" />
+                <stop offset="100%" stopColor="#06b6d4" />
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge> 
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/> 
+                </feMerge>
+              </filter>
+            </defs>
+            
+            {/* Left hand (human) */}
+            <g transform="translate(50, 50)" className="animate-pulse">
+              <path d="M200 150 C190 140, 180 135, 170 140 C160 145, 155 155, 160 165 C165 175, 175 180, 185 175 C195 170, 200 160, 200 150 Z" 
+                    fill="url(#handGradient)" 
+                    stroke="url(#handGradient)" 
+                    strokeWidth="2" 
+                    filter="url(#glow)"/>
+              {/* Fingers */}
+              <path d="M200 150 L220 140 L225 145 L205 155 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+              <path d="M205 155 L225 150 L230 155 L210 165 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+              <path d="M210 165 L230 160 L235 165 L215 175 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+              <path d="M215 175 L235 170 L240 175 L220 185 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+              {/* Index finger pointing */}
+              <path d="M225 145 L280 130 L285 135 L230 150 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+            </g>
+            
+            {/* Right hand (AI) */}
+            <g transform="translate(300, 50)" className="animate-pulse delay-500">
+              <path d="M100 150 C110 140, 120 135, 130 140 C140 145, 145 155, 140 165 C135 175, 125 180, 115 175 C105 170, 100 160, 100 150 Z" 
+                    fill="url(#handGradient)" 
+                    stroke="url(#handGradient)" 
+                    strokeWidth="2" 
+                    filter="url(#glow)"/>
+              {/* Fingers */}
+              <path d="M100 150 L80 140 L75 145 L95 155 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+              <path d="M95 155 L75 150 L70 155 L90 165 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+              <path d="M90 165 L70 160 L65 165 L85 175 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+              <path d="M85 175 L65 170 L60 175 L80 185 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+              {/* Index finger pointing */}
+              <path d="M75 145 L20 130 L15 135 L70 150 Z" fill="url(#handGradient)" filter="url(#glow)"/>
+            </g>
+            
+            {/* Sparks at touching point */}
+            <g transform="translate(295, 175)" className="animate-pulse">
+              <circle cx="5" cy="5" r="2" fill="#60a5fa" className="animate-pulse">
+                <animate attributeName="r" values="2;4;2" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="10" cy="0" r="1.5" fill="#a78bfa" className="animate-pulse delay-300">
+                <animate attributeName="r" values="1.5;3;1.5" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="0" cy="10" r="1" fill="#06b6d4" className="animate-pulse delay-700">
+                <animate attributeName="r" values="1;2.5;1" dur="2s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="8" cy="8" r="1.5" fill="#60a5fa" className="animate-pulse delay-1000">
+                <animate attributeName="r" values="1.5;3;1.5" dur="2s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+            
+            {/* Energy waves */}
+            <g transform="translate(300, 180)" className="opacity-60">
+              <circle cx="0" cy="0" r="20" fill="none" stroke="url(#handGradient)" strokeWidth="1" className="animate-pulse">
+                <animate attributeName="r" values="20;40;20" dur="3s" repeatCount="indefinite"/>
+                <animate attributeName="stroke-opacity" values="0.6;0.1;0.6" dur="3s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="0" cy="0" r="30" fill="none" stroke="url(#handGradient)" strokeWidth="1" className="animate-pulse delay-1000">
+                <animate attributeName="r" values="30;50;30" dur="3s" repeatCount="indefinite"/>
+                <animate attributeName="stroke-opacity" values="0.4;0.05;0.4" dur="3s" repeatCount="indefinite"/>
+              </circle>
+            </g>
+          </svg>
+        </div>
       </div>
 
       {/* Navigation */}
@@ -125,18 +206,18 @@ const Index = () => {
             Built for No-Code Builders
           </Badge>
           
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 relative z-10">
             CodeSense
             <span className="block text-3xl md:text-5xl bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
               Fix Your No-Code Generated Code
             </span>
           </h1>
           
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-10">
+          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-10 relative z-10">
             Turn messy generated code into clean, maintainable applications. Built for Lovable, Bubble, Webflow, and other no-code builders.
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
             <Button 
               size="lg" 
               className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-4 text-lg shadow-lg shadow-blue-500/25 transition-all duration-300 hover:scale-105"
