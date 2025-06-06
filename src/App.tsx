@@ -10,6 +10,7 @@ import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Connect from "./pages/Connect";
 import Dashboard from "./pages/Dashboard";
+import DashboardOverview from "./pages/DashboardOverview";
 import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
 
@@ -33,6 +34,11 @@ const App = () => (
             <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard-overview" element={
+              <ProtectedRoute>
+                <DashboardOverview />
               </ProtectedRoute>
             } />
             <Route path="/analysis/:repoName" element={
