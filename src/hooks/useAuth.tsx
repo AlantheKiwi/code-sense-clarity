@@ -1,9 +1,19 @@
 
 import { useState, useEffect, createContext, useContext } from 'react';
-import { User } from '@supabase/supabase-js';
+
+// Mock User type to replace Supabase User
+interface MockUser {
+  id: string;
+  email: string;
+  user_metadata: {
+    avatar_url: string;
+    full_name: string;
+    user_name: string;
+  };
+}
 
 interface AuthContextType {
-  user: User | null;
+  user: MockUser | null;
   loading: boolean;
   signInWithGitHub: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -12,7 +22,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<MockUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,7 +33,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signInWithGitHub = async () => {
     console.log('Starting GitHub OAuth flow...');
     // Mock successful login for now
-    const mockUser = {
+    const mockUser: MockUser = {
       id: '1',
       email: 'user@example.com',
       user_metadata: {
@@ -31,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         full_name: 'GitHub User',
         user_name: 'githubuser'
       }
-    } as User;
+    };
     setUser(mockUser);
   };
 
