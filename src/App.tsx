@@ -11,6 +11,7 @@ import Login from "./pages/Login";
 import Connect from "./pages/Connect";
 import Dashboard from "./pages/Dashboard";
 import DashboardOverview from "./pages/DashboardOverview";
+import PlatformHealth from "./pages/PlatformHealth";
 import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
 

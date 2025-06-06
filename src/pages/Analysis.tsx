@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -26,6 +25,8 @@ import { useAuth } from "@/hooks/useAuth";
 import { UserMenu } from "@/components/UserMenu";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { detectPlatform, getPlatformBadgeColor } from "@/utils/platformDetection";
+import { analyzeLovableProject, analyzeBubbleProject, analyzeUniversalNoCodeIssues } from "@/utils/platformAnalyzers";
 
 interface CodeIssue {
   id: string;
@@ -68,6 +69,7 @@ const Analysis = () => {
   const [progress, setProgress] = useState(0);
   const [currentFile, setCurrentFile] = useState('');
   const [showCodeViewer, setShowCodeViewer] = useState(false);
+  const [platformInfo, setPlatformInfo] = useState(null);
 
   useEffect(() => {
     if (repoName) {
@@ -211,11 +213,29 @@ const Analysis = () => {
       'src/hooks/useData.ts',
       'src/components/LargeComponent.tsx',
       'src/utils/helpers.ts',
-      'src/components/FormComponent.tsx'
+      'src/components/FormComponent.tsx',
+      'vite.config.ts',
+      'tailwind.config.ts',
+      'src/components/ui/button.tsx',
+      'supabase/config.toml'
     ];
+
+    // Detect platform
+    const platform = detectPlatform(files);
+    setPlatformInfo(platform);
 
     const enhancedIssues = [];
     let processedFiles = 0;
+
+    // Get platform-specific issues
+    if (platform.type === 'lovable') {
+      enhancedIssues.push(...analyzeLovableProject(files));
+    } else if (platform.type === 'bubble') {
+      enhancedIssues.push(...analyzeBubbleProject(files));
+    }
+
+    // Always add universal issues
+    enhancedIssues.push(...analyzeUniversalNoCodeIssues(files));
 
     for (const file of files) {
       setCurrentFile(file);
@@ -234,9 +254,9 @@ const Analysis = () => {
     return {
       totalFiles: files.length,
       issues: enhancedIssues,
-      repositoryType: 'React/TypeScript',
-      buildTool: 'Vite',
-      framework: 'React',
+      repositoryType: platform.framework || 'Unknown',
+      buildTool: platform.buildTool || 'Unknown',
+      platform: platform,
     };
   };
 
@@ -521,6 +541,11 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
             <Code className="h-4 w-4" />
             <span>{analysisData?.repo_full_name}</span>
+            {platformInfo && (
+              <Badge className={getPlatformBadgeColor(platformInfo.type)}>
+                {platformInfo.type} ({platformInfo.confidence * 100}% confidence)
+              </Badge>
+            )}
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Code Analysis Results
@@ -534,8 +559,49 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
               <Clock className="h-4 w-4" />
               <span>Analyzed {analysisData ? new Date(analysisData.analyzed_at).toLocaleDateString() : ''}</span>
             </div>
+            {platformInfo && (
+              <div className="flex items-center gap-1">
+                <Target className="h-4 w-4" />
+                <span>{platformInfo.framework} / {platformInfo.buildTool}</span>
+              </div>
+            )}
           </div>
         </div>
+
+        {/* Platform-Specific Recommendations */}
+        {platformInfo && platformInfo.type !== 'unknown' && (
+          <Card className="mb-8 border-blue-200 bg-blue-50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-blue-900">
+                <Lightbulb className="h-5 w-5" />
+                Platform-Specific Recommendations
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-2 text-sm text-blue-800">
+                {platformInfo.type === 'lovable' && (
+                  <>
+                    <p>• Ask AI to refactor large components into smaller, focused pieces</p>
+                    <p>• Use Supabase integration for secure database access with RLS policies</p>
+                    <p>• Remove unused Shadcn/ui components to optimize bundle size</p>
+                  </>
+                )}
+                {platformInfo.type === 'bubble' && (
+                  <>
+                    <p>• Add search constraints to database queries in repeating groups</p>
+                    <p>• Break complex workflows into reusable custom events</p>
+                    <p>• Set up proper privacy rules for sensitive data</p>
+                  </>
+                )}
+                <div className="mt-3">
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to="/platform-health">View Platform Health Dashboard</Link>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Summary Cards */}
         <div className="grid md:grid-cols-3 gap-6 mb-8">
