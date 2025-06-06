@@ -25,7 +25,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { UserMenu } from "@/components/UserMenu";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { detectPlatform, getPlatformBadgeColor } from "@/utils/platformDetection";
+import { detectPlatform, getPlatformBadgeColor, PlatformInfo } from "@/utils/platformDetection";
 import { analyzeLovableProject, analyzeBubbleProject, analyzeUniversalNoCodeIssues } from "@/utils/platformAnalyzers";
 
 interface CodeIssue {
@@ -69,7 +69,7 @@ const Analysis = () => {
   const [progress, setProgress] = useState(0);
   const [currentFile, setCurrentFile] = useState('');
   const [showCodeViewer, setShowCodeViewer] = useState(false);
-  const [platformInfo, setPlatformInfo] = useState(null);
+  const [platformInfo, setPlatformInfo] = useState<PlatformInfo | null>(null);
 
   useEffect(() => {
     if (repoName) {
@@ -146,6 +146,21 @@ const Analysis = () => {
       
       setProgress(100);
 
+      // Prepare data for Supabase insertion
+      const analysisDataForDb = {
+        totalFiles: enhancedAnalysis.totalFiles,
+        issues: enhancedAnalysis.issues,
+        repositoryType: enhancedAnalysis.repositoryType,
+        buildTool: enhancedAnalysis.buildTool,
+        platform: {
+          type: enhancedAnalysis.platform.type,
+          confidence: enhancedAnalysis.platform.confidence,
+          indicators: enhancedAnalysis.platform.indicators,
+          framework: enhancedAnalysis.platform.framework || null,
+          buildTool: enhancedAnalysis.platform.buildTool || null
+        }
+      };
+
       // Save to database
       const { data: analysisRecord, error: analysisError } = await supabase
         .from('repository_analyses')
@@ -154,7 +169,7 @@ const Analysis = () => {
           repo_name: decodedRepoName.split('/')[1],
           repo_full_name: decodedRepoName,
           repo_url: `https://github.com/${decodedRepoName}`,
-          analysis_data: enhancedAnalysis,
+          analysis_data: analysisDataForDb,
           total_files: enhancedAnalysis.totalFiles,
           critical_issues: enhancedAnalysis.issues.filter((i: any) => i.issue_type === 'critical').length,
           warnings: enhancedAnalysis.issues.filter((i: any) => i.issue_type === 'warning').length,
@@ -543,7 +558,7 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
             <span>{analysisData?.repo_full_name}</span>
             {platformInfo && (
               <Badge className={getPlatformBadgeColor(platformInfo.type)}>
-                {platformInfo.type} ({platformInfo.confidence * 100}% confidence)
+                {platformInfo.type} ({Math.round(platformInfo.confidence * 100)}% confidence)
               </Badge>
             )}
           </div>
