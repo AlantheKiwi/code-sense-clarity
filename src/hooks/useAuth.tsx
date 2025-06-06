@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.log('Cleaning up auth subscription');
       subscription.unsubscribe();
     };
-  }, []);
+  }, [error]);
 
   const signInWithGitHub = async () => {
     try {
@@ -117,16 +117,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setError(null);
   };
 
+  const contextValue: AuthContextType = {
+    user, 
+    session, 
+    loading, 
+    error, 
+    signInWithGitHub, 
+    signOut, 
+    clearError
+  };
+
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      session, 
-      loading, 
-      error, 
-      signInWithGitHub, 
-      signOut, 
-      clearError 
-    }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );
