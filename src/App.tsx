@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +8,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import Demo from "./pages/Demo";
 import Connect from "./pages/Connect";
 import Dashboard from "./pages/Dashboard";
 import DashboardOverview from "./pages/DashboardOverview";
@@ -30,6 +32,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/demo" element={<Demo />} />
             <Route path="/connect" element={
               <ProtectedRoute>
                 <Connect />
@@ -81,7 +84,6 @@ const App = () => (
               </ProtectedRoute>
             } />
             <Route path="/how-it-works" element={<Index />} />
-            <Route path="/demo" element={<Index />} />
             <Route path="/contact" element={<Index />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

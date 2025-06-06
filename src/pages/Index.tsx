@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Code, Sparkles, Zap, Play } from "lucide-react";
@@ -65,7 +66,11 @@ const Index = () => {
               <Button variant="ghost" className="text-white/70 hover:text-white">
                 How it works
               </Button>
-              <Button variant="ghost" className="text-white/70 hover:text-white">
+              <Button 
+                variant="ghost" 
+                className="text-white/70 hover:text-white"
+                onClick={() => navigate('/demo')}
+              >
                 Demo
               </Button>
               <Button variant="ghost" className="text-white/70 hover:text-white">
@@ -113,6 +118,7 @@ const Index = () => {
                   size="lg" 
                   variant="outline" 
                   className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-lg font-semibold"
+                  onClick={() => navigate('/demo')}
                 >
                   <Play className="mr-2 h-5 w-5" />
                   Watch Demo
