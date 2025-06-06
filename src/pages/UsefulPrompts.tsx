@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Code, Sparkles, Zap, Search, ArrowRight, Star, Users } from "lucide-react";
+import { PLATFORM_PROMPT_COUNTS, getTotalPromptCount } from '@/utils/promptCounter';
 
 const UsefulPrompts = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const UsefulPrompts = () => {
       id: 'lovable',
       name: 'Lovable',
       description: 'AI-powered React app builder with instant preview',
-      prompts: 5,
+      prompts: PLATFORM_PROMPT_COUNTS.lovable,
       difficulty: 'Beginner',
       category: 'AI-Powered Builders',
       icon: Code,
@@ -23,7 +24,7 @@ const UsefulPrompts = () => {
       id: 'bolt',
       name: 'Bolt (StackBlitz)',
       description: 'AI coding assistant for rapid prototyping',
-      prompts: 1,
+      prompts: PLATFORM_PROMPT_COUNTS.bolt,
       difficulty: 'Intermediate',
       category: 'AI-Powered Builders',
       icon: Zap,
@@ -34,7 +35,7 @@ const UsefulPrompts = () => {
       id: 'bubble',
       name: 'Bubble',
       description: 'Complete web app platform with visual programming',
-      prompts: 1,
+      prompts: PLATFORM_PROMPT_COUNTS.bubble,
       difficulty: 'Intermediate',
       category: 'Full-Stack App Builders',
       icon: Code,
@@ -45,7 +46,7 @@ const UsefulPrompts = () => {
       id: 'flutterflow',
       name: 'FlutterFlow',
       description: 'Cross-platform mobile app builder with Flutter',
-      prompts: 1,
+      prompts: PLATFORM_PROMPT_COUNTS.flutterflow,
       difficulty: 'Advanced',
       category: 'Full-Stack App Builders',
       icon: Sparkles,
@@ -56,7 +57,7 @@ const UsefulPrompts = () => {
       id: 'adalo',
       name: 'Adalo',
       description: 'Native mobile app builder with database',
-      prompts: 1,
+      prompts: PLATFORM_PROMPT_COUNTS.adalo,
       difficulty: 'Beginner',
       category: 'Full-Stack App Builders',
       icon: Code,
@@ -67,7 +68,7 @@ const UsefulPrompts = () => {
       id: 'webflow',
       name: 'Webflow',
       description: 'Professional website builder with design freedom',
-      prompts: 1,
+      prompts: PLATFORM_PROMPT_COUNTS.webflow,
       difficulty: 'Intermediate',
       category: 'Website & Content Builders',
       icon: Code,
@@ -78,7 +79,7 @@ const UsefulPrompts = () => {
       id: 'softr',
       name: 'Softr',
       description: 'Client portals and internal tools from Airtable',
-      prompts: 1,
+      prompts: PLATFORM_PROMPT_COUNTS.softr,
       difficulty: 'Beginner',
       category: 'Website & Content Builders',
       icon: Users,
@@ -89,7 +90,7 @@ const UsefulPrompts = () => {
       id: 'airtable',
       name: 'Airtable',
       description: 'Database and workflow management platform',
-      prompts: 1,
+      prompts: PLATFORM_PROMPT_COUNTS.airtable,
       difficulty: 'Intermediate',
       category: 'Data & Automation Platforms',
       icon: Search,
@@ -100,7 +101,7 @@ const UsefulPrompts = () => {
       id: 'zapier',
       name: 'Zapier',
       description: 'Automation and integration platform',
-      prompts: 1,
+      prompts: PLATFORM_PROMPT_COUNTS.zapier,
       difficulty: 'Beginner',
       category: 'Data & Automation Platforms',
       icon: Zap,
@@ -109,8 +110,8 @@ const UsefulPrompts = () => {
     }
   ];
 
-  // Calculate total prompts
-  const totalPrompts = platforms.reduce((sum, platform) => sum + platform.prompts, 0);
+  // Calculate total prompts using utility function
+  const totalPrompts = getTotalPromptCount();
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
