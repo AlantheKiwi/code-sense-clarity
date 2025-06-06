@@ -1,3 +1,4 @@
+
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Code, Sparkles, Zap, Play } from "lucide-react";
@@ -82,6 +83,13 @@ const Index = () => {
                 onClick={() => navigate('/demo')}
               >
                 Demo
+              </Button>
+              <Button 
+                variant="ghost" 
+                className="text-white/70 hover:text-white"
+                onClick={() => navigate('/useful-prompts')}
+              >
+                Useful Prompts
               </Button>
               <Button variant="ghost" className="text-white/70 hover:text-white">
                 Contact

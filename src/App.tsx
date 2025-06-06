@@ -19,6 +19,9 @@ import Experts from "./pages/Experts";
 import Integrations from "./pages/Integrations";
 import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
+import UsefulPrompts from "./pages/UsefulPrompts";
+import LovablePrompts from "./pages/prompts/LovablePrompts";
+import BubblePrompts from "./pages/prompts/BubblePrompts";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +36,9 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/login" element={<Login />} />
             <Route path="/demo" element={<Demo />} />
+            <Route path="/useful-prompts" element={<UsefulPrompts />} />
+            <Route path="/prompts/lovable" element={<LovablePrompts />} />
+            <Route path="/prompts/bubble" element={<BubblePrompts />} />
             <Route path="/connect" element={
               <ProtectedRoute>
                 <Connect />
