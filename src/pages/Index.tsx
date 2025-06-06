@@ -218,18 +218,18 @@ const Index = () => {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" onClick={scrollToHowItWorks} className="text-slate-300 hover:text-white">
+              <Button variant="ghost" onClick={scrollToHowItWorks} className="text-slate-100 hover:text-white">
                 How It Works
               </Button>
               {user ? (
                 <>
-                  <Button variant="ghost" asChild className="text-slate-300 hover:text-white">
+                  <Button variant="ghost" asChild className="text-slate-100 hover:text-white">
                     <Link to="/dashboard">Dashboard</Link>
                   </Button>
                   <UserMenu />
                 </>
               ) : (
-                <Button variant="outline" onClick={signInWithGitHub} className="border-slate-600 text-slate-300 hover:bg-slate-800 hover:text-white">
+                <Button variant="outline" onClick={signInWithGitHub} className="border-slate-400 text-slate-100 hover:bg-slate-800 hover:text-white">
                   <Github className="mr-2 h-4 w-4" />
                   Sign In
                 </Button>
@@ -244,26 +244,26 @@ const Index = () => {
         <div className="max-w-7xl mx-auto text-center">
           {/* Floating tech keywords */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-20 left-10 text-blue-400/30 text-sm font-mono animate-fade-in">ANALYSIS</div>
-            <div className="absolute top-32 right-20 text-purple-400/30 text-sm font-mono animate-fade-in delay-500">STRATEGY</div>
-            <div className="absolute bottom-40 left-20 text-cyan-400/30 text-sm font-mono animate-fade-in delay-1000">CREATIVE</div>
-            <div className="absolute bottom-60 right-10 text-blue-400/30 text-sm font-mono animate-fade-in delay-1500">VISION</div>
-            <div className="absolute top-1/2 left-5 text-purple-400/30 text-sm font-mono animate-fade-in delay-2000">PLANNING</div>
-            <div className="absolute top-1/3 right-5 text-cyan-400/30 text-sm font-mono animate-fade-in delay-2500">INNOVATIVE</div>
+            <div className="absolute top-20 left-10 text-blue-300/50 text-sm font-mono animate-fade-in">ANALYSIS</div>
+            <div className="absolute top-32 right-20 text-purple-300/50 text-sm font-mono animate-fade-in delay-500">STRATEGY</div>
+            <div className="absolute bottom-40 left-20 text-cyan-300/50 text-sm font-mono animate-fade-in delay-1000">CREATIVE</div>
+            <div className="absolute bottom-60 right-10 text-blue-300/50 text-sm font-mono animate-fade-in delay-1500">VISION</div>
+            <div className="absolute top-1/2 left-5 text-purple-300/50 text-sm font-mono animate-fade-in delay-2000">PLANNING</div>
+            <div className="absolute top-1/3 right-5 text-cyan-300/50 text-sm font-mono animate-fade-in delay-2500">INNOVATIVE</div>
           </div>
           
-          <Badge className="mb-6 bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-300 border-blue-400/30 backdrop-blur-sm">
+          <Badge className="mb-6 bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-200 border-blue-400/30 backdrop-blur-sm">
             Built for No-Code Builders
           </Badge>
           
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 relative z-20">
             CodeSense
-            <span className="block text-3xl md:text-5xl bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+            <span className="block text-3xl md:text-5xl bg-gradient-to-r from-blue-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent">
               Fix Your No-Code Generated Code
             </span>
           </h1>
           
-          <p className="text-xl text-slate-300 max-w-3xl mx-auto mb-10 relative z-20">
+          <p className="text-xl text-slate-100 max-w-3xl mx-auto mb-10 relative z-20">
             Turn messy generated code into clean, maintainable applications. Built for Lovable, Bubble, Webflow, and other no-code builders.
           </p>
           
@@ -280,7 +280,7 @@ const Index = () => {
             <Button 
               variant="outline" 
               size="lg" 
-              className="px-8 py-4 text-lg border-slate-600 text-slate-300 hover:bg-slate-800/50 hover:text-white backdrop-blur-sm"
+              className="px-8 py-4 text-lg border-slate-400 text-slate-100 hover:bg-slate-800/50 hover:text-white backdrop-blur-sm"
               onClick={scrollToHowItWorks}
             >
               See How It Works
@@ -293,36 +293,36 @@ const Index = () => {
       <section className="relative z-10 px-4 sm:px-6 lg:px-8 py-16 bg-slate-800/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Stop Wrestling with Code Issues
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-200 max-w-2xl mx-auto">
               CodeSense automatically finds and explains how to fix these issues in plain English
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-2 border-red-100 bg-red-50/50">
+            <Card className="border-2 border-red-300/50 bg-red-50/10 backdrop-blur-sm">
               <CardContent className="p-6 text-center">
-                <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">TypeScript Errors Everywhere</h3>
-                <p className="text-gray-600">Your generated code is full of type errors that break the build</p>
+                <AlertTriangle className="h-12 w-12 text-red-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-white mb-2">TypeScript Errors Everywhere</h3>
+                <p className="text-slate-200">Your generated code is full of type errors that break the build</p>
               </CardContent>
             </Card>
             
-            <Card className="border-2 border-orange-100 bg-orange-50/50">
+            <Card className="border-2 border-orange-300/50 bg-orange-50/10 backdrop-blur-sm">
               <CardContent className="p-6 text-center">
-                <FileText className="h-12 w-12 text-orange-500 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Messy File Structure</h3>
-                <p className="text-gray-600">Components scattered everywhere with no clear organization</p>
+                <FileText className="h-12 w-12 text-orange-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-white mb-2">Messy File Structure</h3>
+                <p className="text-slate-200">Components scattered everywhere with no clear organization</p>
               </CardContent>
             </Card>
             
-            <Card className="border-2 border-yellow-100 bg-yellow-50/50">
+            <Card className="border-2 border-yellow-300/50 bg-yellow-50/10 backdrop-blur-sm">
               <CardContent className="p-6 text-center">
-                <Zap className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Performance Problems</h3>
-                <p className="text-gray-600">Slow loading times and inefficient code patterns</p>
+                <Zap className="h-12 w-12 text-yellow-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-white mb-2">Performance Problems</h3>
+                <p className="text-slate-200">Slow loading times and inefficient code patterns</p>
               </CardContent>
             </Card>
           </div>
@@ -333,33 +333,33 @@ const Index = () => {
       <section className="relative z-10 px-4 sm:px-6 lg:px-8 py-16">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Powerful Features for Clean Code
             </h2>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-2 border-blue-100">
+            <Card className="border-2 border-blue-300/50 bg-blue-50/10 backdrop-blur-sm">
               <CardContent className="p-6 text-center">
-                <Search className="h-12 w-12 text-blue-500 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Smart Issue Detection</h3>
-                <p className="text-gray-600">Automatically finds problems in your generated code</p>
+                <Search className="h-12 w-12 text-blue-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-white mb-2">Smart Issue Detection</h3>
+                <p className="text-slate-200">Automatically finds problems in your generated code</p>
               </CardContent>
             </Card>
             
-            <Card className="border-2 border-purple-100">
+            <Card className="border-2 border-purple-300/50 bg-purple-50/10 backdrop-blur-sm">
               <CardContent className="p-6 text-center">
-                <BookOpen className="h-12 w-12 text-purple-500 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Plain English Explanations</h3>
-                <p className="text-gray-600">No technical jargon - clear explanations anyone can understand</p>
+                <BookOpen className="h-12 w-12 text-purple-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-white mb-2">Plain English Explanations</h3>
+                <p className="text-slate-200">No technical jargon - clear explanations anyone can understand</p>
               </CardContent>
             </Card>
             
-            <Card className="border-2 border-green-100">
+            <Card className="border-2 border-green-300/50 bg-green-50/10 backdrop-blur-sm">
               <CardContent className="p-6 text-center">
-                <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Step-by-Step Fixes</h3>
-                <p className="text-gray-600">Guided solutions that walk you through each fix</p>
+                <CheckCircle className="h-12 w-12 text-green-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-white mb-2">Step-by-Step Fixes</h3>
+                <p className="text-slate-200">Guided solutions that walk you through each fix</p>
               </CardContent>
             </Card>
           </div>
@@ -370,44 +370,44 @@ const Index = () => {
       <section id="how-it-works" className="relative z-10 px-4 sm:px-6 lg:px-8 py-16 bg-slate-800/50 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               How It Works
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-slate-200">
               Get from messy code to clean application in three simple steps
             </p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 1
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Connect Your GitHub Repository</h3>
-              <p className="text-gray-600">Securely connect your repository - we only read, never modify your code</p>
+              <h3 className="text-xl font-semibold text-white mb-2">Connect Your GitHub Repository</h3>
+              <p className="text-slate-200">Securely connect your repository - we only read, never modify your code</p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 2
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Get Instant Analysis</h3>
-              <p className="text-gray-600">Our AI analyzes your code and identifies issues in under 60 seconds</p>
+              <h3 className="text-xl font-semibold text-white mb-2">Get Instant Analysis</h3>
+              <p className="text-slate-200">Our AI analyzes your code and identifies issues in under 60 seconds</p>
             </div>
             
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
                 3
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Fix Issues with Guided Help</h3>
-              <p className="text-gray-600">Follow step-by-step instructions to clean up your code</p>
+              <h3 className="text-xl font-semibold text-white mb-2">Fix Issues with Guided Help</h3>
+              <p className="text-slate-200">Follow step-by-step instructions to clean up your code</p>
             </div>
           </div>
           
           <div className="text-center mt-12">
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg"
+              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-4 text-lg"
               onClick={handleAnalyzeCode}
             >
               Get Started Now
@@ -422,15 +422,15 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="h-8 w-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+              <div className="h-8 w-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
                 <Code className="h-5 w-5 text-white" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 CodeSense
               </span>
             </div>
-            <p className="text-gray-600 mb-4">Built for the no-code community</p>
-            <Button variant="link">
+            <p className="text-slate-300 mb-4">Built for the no-code community</p>
+            <Button variant="link" className="text-slate-300 hover:text-white">
               Contact
             </Button>
           </div>
