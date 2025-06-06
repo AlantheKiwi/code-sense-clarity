@@ -3,23 +3,61 @@ import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Github, CheckCircle, Code, ArrowRight } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Github, CheckCircle, Code, ArrowRight, AlertCircle } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { UserMenu } from "@/components/UserMenu";
 import { useNavigate } from "react-router-dom";
 
 const Connect = () => {
-  const { user } = useAuth();
+  const { user, session, error } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Auto-redirect to dashboard after a short delay to show success
-    const timer = setTimeout(() => {
-      navigate('/dashboard');
-    }, 3000);
+    // Only auto-redirect if we have a valid session with GitHub token
+    if (user && session?.provider_token) {
+      const timer = setTimeout(() => {
+        navigate('/dashboard');
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [user, session, navigate]);
 
-    return () => clearTimeout(timer);
-  }, [navigate]);
+  // Show error if there's an auth issue
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 flex items-center justify-center px-4">
+        <Card className="max-w-md w-full border-red-200">
+          <CardContent className="p-6">
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>
+                Authentication failed: {error}
+              </AlertDescription>
+            </Alert>
+            <Button 
+              onClick={() => navigate('/login')} 
+              className="w-full mt-4"
+            >
+              Try Again
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Show loading if no user yet
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Completing authentication...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
@@ -85,6 +123,12 @@ const Connect = () => {
                 </div>
                 <CheckCircle className="ml-auto h-5 w-5 text-green-600" />
               </div>
+              
+              {session?.provider_token && (
+                <div className="mt-2 text-xs text-green-600">
+                  ✓ GitHub access token secured
+                </div>
+              )}
             </div>
 
             <div className="text-center">
@@ -92,12 +136,16 @@ const Connect = () => {
                 onClick={() => navigate('/dashboard')}
                 size="lg"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                disabled={!session?.provider_token}
               >
                 View My Repositories
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <p className="text-sm text-gray-500 mt-3">
-                Redirecting automatically in a few seconds...
+                {session?.provider_token 
+                  ? 'Redirecting automatically in a few seconds...'
+                  : 'Completing GitHub connection...'
+                }
               </p>
             </div>
 

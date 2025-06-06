@@ -23,7 +23,7 @@ interface Repository {
 }
 
 const Dashboard = () => {
-  const { user } = useAuth();
+  const { user, session } = useAuth();
   const navigate = useNavigate();
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
@@ -32,10 +32,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchRepositories();
-  }, [user]);
+  }, [session]);
 
   const fetchRepositories = async () => {
-    if (!user?.user_metadata?.provider_token) {
+    // Check for GitHub access token in session
+    const githubToken = session?.provider_token;
+    
+    if (!githubToken) {
       setError('GitHub access token not found. Please sign in again.');
       setLoading(false);
       return;
@@ -43,22 +46,29 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
+      setError(null);
+      console.log('Fetching repositories with token...');
+      
       const response = await fetch('https://api.github.com/user/repos?sort=updated&per_page=100', {
         headers: {
-          'Authorization': `token ${user.user_metadata.provider_token}`,
+          'Authorization': `token ${githubToken}`,
           'Accept': 'application/vnd.github.v3+json',
         },
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch repositories');
+        if (response.status === 401) {
+          throw new Error('GitHub access token expired. Please sign in again.');
+        }
+        throw new Error(`Failed to fetch repositories: ${response.status}`);
       }
 
       const repos = await response.json();
+      console.log(`Fetched ${repos.length} repositories`);
       setRepositories(repos);
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error fetching repositories:', err);
-      setError('Failed to fetch repositories. Please try again.');
+      setError(err.message || 'Failed to fetch repositories. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -189,9 +199,16 @@ const Dashboard = () => {
           <Card className="border-red-200 bg-red-50 mb-8">
             <CardContent className="p-6">
               <p className="text-red-800">{error}</p>
-              <Button onClick={fetchRepositories} variant="outline" className="mt-4">
-                Retry
-              </Button>
+              <div className="mt-4 space-x-2">
+                <Button onClick={fetchRepositories} variant="outline">
+                  Retry
+                </Button>
+                {error.includes('token') && (
+                  <Button onClick={() => navigate('/login')} variant="outline">
+                    Sign In Again
+                  </Button>
+                )}
+              </div>
             </CardContent>
           </Card>
         )}
