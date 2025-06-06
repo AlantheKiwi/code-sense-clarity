@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Code, Sparkles, Zap, Play } from "lucide-react";
@@ -8,6 +7,13 @@ const Index = () => {
 
   const handleAnalyzeClick = () => {
     navigate('/dashboard-overview');
+  };
+
+  const scrollToHowItWorks = () => {
+    const element = document.getElementById('how-it-works');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -63,7 +69,11 @@ const Index = () => {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" className="text-white/70 hover:text-white">
+              <Button 
+                variant="ghost" 
+                className="text-white/70 hover:text-white"
+                onClick={scrollToHowItWorks}
+              >
                 How it works
               </Button>
               <Button 
@@ -175,7 +185,7 @@ const Index = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="relative z-10 py-16 px-4 sm:px-6 lg:px-8">
+      <section id="how-it-works" className="relative z-10 py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-3xl font-bold text-white mb-8 text-center">
             How It Works
