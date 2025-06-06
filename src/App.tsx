@@ -22,6 +22,13 @@ import NotFound from "./pages/NotFound";
 import UsefulPrompts from "./pages/UsefulPrompts";
 import LovablePrompts from "./pages/prompts/LovablePrompts";
 import BubblePrompts from "./pages/prompts/BubblePrompts";
+import WebflowPrompts from "./pages/prompts/WebflowPrompts";
+import FlutterFlowPrompts from "./pages/prompts/FlutterFlowPrompts";
+import AdaloPrompts from "./pages/prompts/AdaloPrompts";
+import SoftrPrompts from "./pages/prompts/SoftrPrompts";
+import BoltPrompts from "./pages/prompts/BoltPrompts";
+import AirtablePrompts from "./pages/prompts/AirtablePrompts";
+import ZapierPrompts from "./pages/prompts/ZapierPrompts";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +46,13 @@ const App = () => (
             <Route path="/useful-prompts" element={<UsefulPrompts />} />
             <Route path="/prompts/lovable" element={<LovablePrompts />} />
             <Route path="/prompts/bubble" element={<BubblePrompts />} />
+            <Route path="/prompts/webflow" element={<WebflowPrompts />} />
+            <Route path="/prompts/flutterflow" element={<FlutterFlowPrompts />} />
+            <Route path="/prompts/adalo" element={<AdaloPrompts />} />
+            <Route path="/prompts/softr" element={<SoftrPrompts />} />
+            <Route path="/prompts/bolt" element={<BoltPrompts />} />
+            <Route path="/prompts/airtable" element={<AirtablePrompts />} />
+            <Route path="/prompts/zapier" element={<ZapierPrompts />} />
             <Route path="/connect" element={
               <ProtectedRoute>
                 <Connect />

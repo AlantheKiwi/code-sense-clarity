@@ -4,44 +4,33 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Code, Copy, Download, Star, ArrowLeft, Search, CheckCircle, Flag } from "lucide-react";
+import { Sparkles, Copy, Download, Star, ArrowLeft, CheckCircle, Flag } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const BubblePrompts = () => {
+const FlutterFlowPrompts = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const [searchTerm, setSearchTerm] = useState('');
 
-  const samplePrompts = [
+  const prompts = [
     {
       id: 1,
-      title: 'Optimize Database Workflows for Performance',
-      description: 'Reduce workload units and improve app performance with proper workflow structure',
-      difficulty: 'Intermediate',
-      rating: 4.8,
+      title: 'Optimize App Performance and Structure',
+      description: 'Improve FlutterFlow app speed and organization for better user experience',
+      difficulty: 'Advanced',
+      rating: 4.6,
       verified: true,
-      useCase: 'Performance optimization, workflow management',
-      tags: ['performance', 'workflow', 'database'],
-      prompt: `Review my [WORKFLOW_NAME] workflow and optimize for performance:
+      useCase: 'Performance optimization, app structure',
+      tags: ['performance', 'optimization', 'structure'],
+      prompt: `Optimize my FlutterFlow app for better performance:
 
-1. **Minimize redundancy:** Consolidate duplicate workflows and database calls
-2. **Add constraints:** Use "Only when" conditions to prevent unnecessary triggers  
-3. **Batch operations:** Group related database changes into single actions
-4. **Clear triggers:** Ensure each workflow has a specific, clear trigger event
+1. **Component structure:** Break large widgets into smaller, reusable components
+2. **State management:** Use proper state scoping (local vs global state)  
+3. **Image optimization:** Implement lazy loading and proper image sizing
+4. **Navigation:** Optimize page routing and minimize widget rebuilds
+5. **Backend calls:** Reduce API calls with proper caching and pagination
 
-Focus on reducing workload units while maintaining exact functionality. Do not change the user experience.`,
-      whyItWorks: "Based on Bubble forum best practices for workflow optimization and workload unit reduction."
-    },
-    {
-      id: 2,
-      title: 'Create a User Authentication Flow',
-      description: 'Build complete signup, login, and password reset workflows',
-      difficulty: 'Intermediate',
-      rating: 4.9,
-      verified: true,
-      useCase: 'User management systems',
-      tags: ['auth', 'workflow', 'security'],
-      prompt: 'Create a comprehensive user authentication system in Bubble with email verification, password reset, and user profile management. Include proper privacy rules and security measures.'
+Focus on app responsiveness and smooth animations. Maintain existing functionality while improving performance.`,
+      whyItWorks: "Based on FlutterFlow community best practices for performance optimization."
     }
   ];
 
@@ -82,7 +71,6 @@ Focus on reducing workload units while maintaining exact functionality. Do not c
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
-      {/* Navigation */}
       <nav className="border-b border-white/10 bg-black/20 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
@@ -92,10 +80,10 @@ Focus on reducing workload units while maintaining exact functionality. Do not c
                 Back to Prompts
               </Button>
               <div className="flex items-center space-x-2">
-                <div className="h-8 w-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
-                  <Code className="h-5 w-5 text-white" />
+                <div className="h-8 w-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                  <Sparkles className="h-5 w-5 text-white" />
                 </div>
-                <span className="text-xl font-bold text-white">Bubble Prompts</span>
+                <span className="text-xl font-bold text-white">FlutterFlow Prompts</span>
               </div>
             </div>
             <Button onClick={() => navigate('/login')}>Login</Button>
@@ -103,39 +91,37 @@ Focus on reducing workload units while maintaining exact functionality. Do not c
         </div>
       </nav>
 
-      {/* Platform Header */}
       <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10 mb-8">
             <div className="flex items-center space-x-4 mb-6">
-              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-blue-500 rounded-xl flex items-center justify-center">
-                <Code className="w-8 h-8 text-white" />
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                <Sparkles className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-white">Bubble</h1>
-                <p className="text-white/70">Complete web app platform with visual programming</p>
+                <h1 className="text-3xl font-bold text-white">FlutterFlow</h1>
+                <p className="text-white/70">Cross-platform mobile app builder with Flutter</p>
               </div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className="text-2xl font-bold text-green-400">35</div>
+                <div className="text-2xl font-bold text-blue-400">28</div>
                 <div className="text-white/60">Total Prompts</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-blue-400">4.7</div>
+                <div className="text-2xl font-bold text-cyan-400">4.6</div>
                 <div className="text-white/60">Average Rating</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-purple-400">Visual</div>
-                <div className="text-white/60">No-Code Platform</div>
+                <div className="text-2xl font-bold text-purple-400">Flutter</div>
+                <div className="text-white/60">Native Performance</div>
               </div>
             </div>
           </div>
 
-          {/* Sample Prompts */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {samplePrompts.map((prompt) => (
+            {prompts.map((prompt) => (
               <Card key={prompt.id} className="bg-black/30 border-white/10 hover:bg-black/40 transition-all duration-300">
                 <CardHeader>
                   <div className="flex items-start justify-between">
@@ -177,13 +163,11 @@ Focus on reducing workload units while maintaining exact functionality. Do not c
                       {prompt.prompt}
                     </p>
                   </div>
-                  {prompt.whyItWorks && (
-                    <div className="bg-green-500/10 border border-green-400/20 rounded-lg p-3 mb-4">
-                      <p className="text-green-200 text-sm">
-                        <strong>Why it works:</strong> {prompt.whyItWorks}
-                      </p>
-                    </div>
-                  )}
+                  <div className="bg-cyan-500/10 border border-cyan-400/20 rounded-lg p-3 mb-4">
+                    <p className="text-cyan-200 text-sm">
+                      <strong>Why it works:</strong> {prompt.whyItWorks}
+                    </p>
+                  </div>
                   <div className="flex space-x-2">
                     <Button 
                       size="sm" 
@@ -218,7 +202,7 @@ Focus on reducing workload units while maintaining exact functionality. Do not c
             <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-8 border border-white/10">
               <h3 className="text-xl font-bold text-white mb-4">More Prompts Coming Soon!</h3>
               <p className="text-white/70 mb-6">
-                We're actively building our Bubble prompt library. Check back soon for more comprehensive guides on workflows, database design, API integrations, and advanced features.
+                We're expanding our FlutterFlow library with prompts for custom widgets, Firebase integration, app deployment, and advanced UI animations.
               </p>
               <Button onClick={() => navigate('/useful-prompts')}>
                 Explore Other Platforms
@@ -231,4 +215,4 @@ Focus on reducing workload units while maintaining exact functionality. Do not c
   );
 };
 
-export default BubblePrompts;
+export default FlutterFlowPrompts;

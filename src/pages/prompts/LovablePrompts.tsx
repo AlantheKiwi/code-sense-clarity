@@ -21,25 +21,36 @@ const LovablePrompts = () => {
       prompts: [
         {
           id: 1,
-          title: 'Create a Landing Page with Hero Section',
-          description: 'Build a responsive landing page with hero section, features, and call-to-action',
+          title: 'Structure a New Project with Clear Architecture',
+          description: 'The most effective way to start any Lovable project with proper structure and constraints',
           difficulty: 'Beginner',
           rating: 4.9,
+          verified: true,
+          useCase: 'Starting new Lovable projects with proper foundation',
+          tags: ['architecture', 'project-setup', 'best-practices'],
+          prompt: `I need a **[APP_TYPE]** application with:
+- **Tech Stack:** React frontend, Tailwind CSS for styling, Supabase for auth and database
+- **Core Features:** [LIST_MAIN_FEATURES]
+- **Key Pages:** [LIST_3-5_MAIN_PAGES]
+
+Start by building the **main dashboard page**, containing:
+- A header with navigation
+- [SPECIFIC_DASHBOARD_REQUIREMENTS]
+- Clean, responsive design with dummy data for now
+
+**Important:** Do not modify auth or unrelated pages. Focus only on the dashboard implementation.`,
+          whyItWorks: "This follows Lovable's recommended structure with clear tech stack, focused scope, and specific starting point."
+        },
+        {
+          id: 2,
+          title: 'Build a Landing Page with Hero Section',
+          description: 'Build a responsive landing page with hero section, features, and call-to-action',
+          difficulty: 'Beginner',
+          rating: 4.8,
           verified: true,
           useCase: 'Marketing websites, portfolios',
           tags: ['responsive', 'landing', 'hero'],
           prompt: 'Create a modern landing page for a SaaS product with a hero section, features grid, testimonials, and CTA. Use Tailwind CSS for styling and make it fully responsive.'
-        },
-        {
-          id: 2,
-          title: 'Build a Todo App with Local Storage',
-          description: 'Create a fully functional todo application with persistence',
-          difficulty: 'Beginner',
-          rating: 4.8,
-          verified: true,
-          useCase: 'Learning React state management',
-          tags: ['react', 'localStorage', 'crud'],
-          prompt: 'Build a todo application with add, edit, delete, and mark complete functionality. Store data in localStorage and include filtering by status (all, active, completed).'
         }
       ]
     },
@@ -262,10 +273,17 @@ const LovablePrompts = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="bg-black/50 rounded-lg p-4 mb-4">
-                    <p className="text-white/80 text-sm font-mono leading-relaxed">
+                    <p className="text-white/80 text-sm font-mono leading-relaxed whitespace-pre-line">
                       {prompt.prompt}
                     </p>
                   </div>
+                  {prompt.whyItWorks && (
+                    <div className="bg-blue-500/10 border border-blue-400/20 rounded-lg p-3 mb-4">
+                      <p className="text-blue-200 text-sm">
+                        <strong>Why it works:</strong> {prompt.whyItWorks}
+                      </p>
+                    </div>
+                  )}
                   <div className="flex space-x-2">
                     <Button 
                       size="sm" 
