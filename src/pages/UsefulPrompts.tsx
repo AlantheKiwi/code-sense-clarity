@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,7 +12,7 @@ const UsefulPrompts = () => {
       id: 'lovable',
       name: 'Lovable',
       description: 'AI-powered React app builder with instant preview',
-      prompts: 25,
+      prompts: 1,
       difficulty: 'Beginner',
       category: 'AI-Powered Builders',
       icon: Code,
@@ -24,7 +23,7 @@ const UsefulPrompts = () => {
       id: 'bolt',
       name: 'Bolt (StackBlitz)',
       description: 'AI coding assistant for rapid prototyping',
-      prompts: 22,
+      prompts: 1,
       difficulty: 'Intermediate',
       category: 'AI-Powered Builders',
       icon: Zap,
@@ -35,7 +34,7 @@ const UsefulPrompts = () => {
       id: 'bubble',
       name: 'Bubble',
       description: 'Complete web app platform with visual programming',
-      prompts: 35,
+      prompts: 1,
       difficulty: 'Intermediate',
       category: 'Full-Stack App Builders',
       icon: Code,
@@ -46,7 +45,7 @@ const UsefulPrompts = () => {
       id: 'flutterflow',
       name: 'FlutterFlow',
       description: 'Cross-platform mobile app builder with Flutter',
-      prompts: 28,
+      prompts: 1,
       difficulty: 'Advanced',
       category: 'Full-Stack App Builders',
       icon: Sparkles,
@@ -57,7 +56,7 @@ const UsefulPrompts = () => {
       id: 'adalo',
       name: 'Adalo',
       description: 'Native mobile app builder with database',
-      prompts: 24,
+      prompts: 1,
       difficulty: 'Beginner',
       category: 'Full-Stack App Builders',
       icon: Code,
@@ -68,7 +67,7 @@ const UsefulPrompts = () => {
       id: 'webflow',
       name: 'Webflow',
       description: 'Professional website builder with design freedom',
-      prompts: 32,
+      prompts: 1,
       difficulty: 'Intermediate',
       category: 'Website & Content Builders',
       icon: Code,
@@ -79,7 +78,7 @@ const UsefulPrompts = () => {
       id: 'softr',
       name: 'Softr',
       description: 'Client portals and internal tools from Airtable',
-      prompts: 18,
+      prompts: 1,
       difficulty: 'Beginner',
       category: 'Website & Content Builders',
       icon: Users,
@@ -90,7 +89,7 @@ const UsefulPrompts = () => {
       id: 'airtable',
       name: 'Airtable',
       description: 'Database and workflow management platform',
-      prompts: 30,
+      prompts: 1,
       difficulty: 'Intermediate',
       category: 'Data & Automation Platforms',
       icon: Search,
@@ -101,7 +100,7 @@ const UsefulPrompts = () => {
       id: 'zapier',
       name: 'Zapier',
       description: 'Automation and integration platform',
-      prompts: 26,
+      prompts: 1,
       difficulty: 'Beginner',
       category: 'Data & Automation Platforms',
       icon: Zap,
@@ -173,7 +172,7 @@ const UsefulPrompts = () => {
             <div className="flex items-center justify-center space-x-8 text-white/60">
               <div className="flex items-center">
                 <Star className="w-5 h-5 text-yellow-400 mr-2" />
-                <span>240+ Prompts</span>
+                <span>9 Prompts</span>
               </div>
               <div className="flex items-center">
                 <Users className="w-5 h-5 text-blue-400 mr-2" />
@@ -213,7 +212,7 @@ const UsefulPrompts = () => {
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center text-white/60">
                             <Code className="w-4 h-4 mr-1" />
-                            <span className="text-sm">{platform.prompts} prompts</span>
+                            <span className="text-sm">{platform.prompts} prompt{platform.prompts !== 1 ? 's' : ''}</span>
                           </div>
                           <div className="flex items-center text-white/60">
                             <Star className="w-4 h-4 mr-1 text-yellow-400" />
