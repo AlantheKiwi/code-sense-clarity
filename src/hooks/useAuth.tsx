@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       console.log('Cleaning up auth subscription');
       subscription.unsubscribe();
     };
-  }, [error]);
+  }, []); // Fixed: Removed error dependency to prevent infinite loops
 
   const signInWithGitHub = async () => {
     try {
@@ -76,12 +76,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (error) {
         console.error('Error signing in with GitHub:', error);
-        setError(error.message);
+        // Provide more specific error messages
+        if (error.message.includes('Invalid login credentials')) {
+          setError('GitHub OAuth is not configured properly. Please check your Supabase settings.');
+        } else if (error.message.includes('redirect')) {
+          setError('Redirect URL configuration issue. Please check your Site URL and Redirect URLs in Supabase.');
+        } else {
+          setError(error.message);
+        }
         throw error;
       }
     } catch (error: any) {
       console.error('GitHub sign-in error:', error);
-      setError(error.message || 'Failed to sign in with GitHub');
+      if (!error.message.includes('OAuth')) {
+        setError(error.message || 'Failed to sign in with GitHub');
+      }
       throw error;
     } finally {
       setLoading(false);

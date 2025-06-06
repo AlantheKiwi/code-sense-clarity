@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Github, Code, AlertCircle } from "lucide-react";
+import { Github, Code, AlertCircle, ExternalLink } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useEffect } from "react";
@@ -34,6 +34,13 @@ const Login = () => {
     return null;
   }
 
+  const isConfigurationError = error && (
+    error.includes('OAuth') || 
+    error.includes('redirect') || 
+    error.includes('configured') ||
+    error.includes('Invalid login credentials')
+  );
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 flex items-center justify-center px-4">
       <div className="max-w-md w-full">
@@ -60,13 +67,41 @@ const Login = () => {
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>
                   {error}
-                  {error.includes('invalid') && (
-                    <div className="mt-2 text-sm">
-                      This might be a configuration issue. Please check that the Site URL and Redirect URLs are properly configured in the Supabase dashboard.
-                    </div>
-                  )}
                 </AlertDescription>
               </Alert>
+            )}
+            
+            {isConfigurationError && (
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 space-y-3">
+                <h3 className="font-semibold text-yellow-900">Configuration Required</h3>
+                <p className="text-sm text-yellow-800">
+                  GitHub OAuth needs to be configured in your Supabase project:
+                </p>
+                <ol className="text-sm text-yellow-800 list-decimal list-inside space-y-1">
+                  <li>Go to Authentication → Providers in Supabase</li>
+                  <li>Enable GitHub provider</li>
+                  <li>Set up GitHub OAuth app credentials</li>
+                  <li>Configure Site URL and Redirect URLs</li>
+                </ol>
+                <div className="flex space-x-2">
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => window.open('https://supabase.com/dashboard/project/dtwgnqzuskdfuypigaor/auth/providers', '_blank')}
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    Supabase Auth
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => window.open('https://github.com/settings/applications/new', '_blank')}
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    GitHub OAuth
+                  </Button>
+                </div>
+              </div>
             )}
             
             <Button 
@@ -82,15 +117,6 @@ const Login = () => {
             <div className="text-center text-sm text-gray-500">
               We only read your repositories - never write or modify code
             </div>
-            
-            {error && error.includes('invalid') && (
-              <div className="text-xs text-red-600 bg-red-50 p-3 rounded border">
-                <strong>Configuration Help:</strong>
-                <br />• Ensure Site URL is set to your app's URL in Supabase Auth settings
-                <br />• Add your app's URL to Authorized Redirect URLs
-                <br />• Check that GitHub OAuth app is properly configured
-              </div>
-            )}
           </CardContent>
         </Card>
 
