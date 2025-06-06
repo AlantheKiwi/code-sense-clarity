@@ -9,7 +9,104 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      code_issues: {
+        Row: {
+          analysis_id: string
+          created_at: string
+          description: string
+          difficulty_level: string | null
+          estimated_fix_time: string | null
+          file_path: string
+          id: string
+          issue_category: string
+          issue_type: string
+          line_number: number | null
+          suggested_fix: string | null
+          title: string
+        }
+        Insert: {
+          analysis_id: string
+          created_at?: string
+          description: string
+          difficulty_level?: string | null
+          estimated_fix_time?: string | null
+          file_path: string
+          id?: string
+          issue_category: string
+          issue_type: string
+          line_number?: number | null
+          suggested_fix?: string | null
+          title: string
+        }
+        Update: {
+          analysis_id?: string
+          created_at?: string
+          description?: string
+          difficulty_level?: string | null
+          estimated_fix_time?: string | null
+          file_path?: string
+          id?: string
+          issue_category?: string
+          issue_type?: string
+          line_number?: number | null
+          suggested_fix?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "code_issues_analysis_id_fkey"
+            columns: ["analysis_id"]
+            isOneToOne: false
+            referencedRelation: "repository_analyses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      repository_analyses: {
+        Row: {
+          analysis_data: Json
+          analyzed_at: string
+          created_at: string
+          critical_issues: number | null
+          id: string
+          repo_full_name: string
+          repo_name: string
+          repo_url: string
+          suggestions: number | null
+          total_files: number | null
+          user_id: string
+          warnings: number | null
+        }
+        Insert: {
+          analysis_data: Json
+          analyzed_at?: string
+          created_at?: string
+          critical_issues?: number | null
+          id?: string
+          repo_full_name: string
+          repo_name: string
+          repo_url: string
+          suggestions?: number | null
+          total_files?: number | null
+          user_id: string
+          warnings?: number | null
+        }
+        Update: {
+          analysis_data?: Json
+          analyzed_at?: string
+          created_at?: string
+          critical_issues?: number | null
+          id?: string
+          repo_full_name?: string
+          repo_name?: string
+          repo_url?: string
+          suggestions?: number | null
+          total_files?: number | null
+          user_id?: string
+          warnings?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -1,13 +1,25 @@
 
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Github, CheckCircle, Code } from "lucide-react";
+import { Github, CheckCircle, Code, ArrowRight } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { UserMenu } from "@/components/UserMenu";
+import { useNavigate } from "react-router-dom";
 
 const Connect = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Auto-redirect to dashboard after a short delay to show success
+    const timer = setTimeout(() => {
+      navigate('/dashboard');
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
@@ -34,13 +46,13 @@ const Connect = () => {
         <div className="text-center mb-12">
           <Badge className="mb-4 bg-green-100 text-green-700 border-green-200">
             <CheckCircle className="mr-1 h-3 w-3" />
-            Connected to GitHub
+            Successfully Connected!
           </Badge>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Welcome to CodeSense, {user?.user_metadata?.full_name || 'Developer'}!
+            Welcome to CodeSense, {user?.user_metadata?.full_name || user?.user_metadata?.name || 'Developer'}!
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Let's connect your repository and start analyzing your code.
+            Your GitHub account is now connected. Let's analyze your repositories for code issues and improvements.
           </p>
         </div>
 
@@ -48,15 +60,15 @@ const Connect = () => {
           <CardHeader className="text-center">
             <CardTitle className="text-2xl flex items-center justify-center gap-2">
               <Github className="h-6 w-6" />
-              Select Repository
+              GitHub Connected
             </CardTitle>
             <p className="text-gray-600">
-              Choose a repository from your GitHub account to analyze.
+              Ready to analyze your repositories for code issues.
             </p>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h3 className="font-semibold text-blue-900 mb-2">Connected Account:</h3>
+            <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+              <h3 className="font-semibold text-green-900 mb-2">Connected Account:</h3>
               <div className="flex items-center gap-3">
                 <img 
                   src={user?.user_metadata?.avatar_url} 
@@ -64,26 +76,35 @@ const Connect = () => {
                   className="w-10 h-10 rounded-full"
                 />
                 <div>
-                  <p className="font-medium text-blue-800">{user?.user_metadata?.full_name}</p>
-                  <p className="text-sm text-blue-600">@{user?.user_metadata?.user_name}</p>
+                  <p className="font-medium text-green-800">
+                    {user?.user_metadata?.full_name || user?.user_metadata?.name}
+                  </p>
+                  <p className="text-sm text-green-600">
+                    @{user?.user_metadata?.user_name || user?.user_metadata?.preferred_username}
+                  </p>
                 </div>
+                <CheckCircle className="ml-auto h-5 w-5 text-green-600" />
               </div>
             </div>
 
-            <div className="text-center py-8">
-              <Github className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                Loading your repositories...
-              </h3>
-              <p className="text-gray-600 mb-4">
-                We're fetching your GitHub repositories. This may take a moment.
+            <div className="text-center">
+              <Button 
+                onClick={() => navigate('/dashboard')}
+                size="lg"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              >
+                View My Repositories
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <p className="text-sm text-gray-500 mt-3">
+                Redirecting automatically in a few seconds...
               </p>
-              <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
             </div>
 
-            <div className="text-center text-sm text-gray-500">
+            <div className="text-center text-sm text-gray-500 space-y-1">
               <p>🔒 We only read your repositories - never modify your code</p>
               <p>✨ Select any public or private repository you own</p>
+              <p>⚡ Analysis typically takes 30-60 seconds</p>
             </div>
           </CardContent>
         </Card>

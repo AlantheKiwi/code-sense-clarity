@@ -20,14 +20,18 @@ export const UserMenu = () => {
     await signOut();
   };
 
+  const avatarUrl = user.user_metadata?.avatar_url;
+  const fullName = user.user_metadata?.full_name || user.user_metadata?.name;
+  const userName = user.user_metadata?.user_name || user.user_metadata?.preferred_username;
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarImage src={user.user_metadata?.avatar_url} alt={user.user_metadata?.full_name || ''} />
+            <AvatarImage src={avatarUrl} alt={fullName || ''} />
             <AvatarFallback>
-              {user.user_metadata?.full_name?.charAt(0) || user.email?.charAt(0) || 'U'}
+              {fullName?.charAt(0) || user.email?.charAt(0) || 'U'}
             </AvatarFallback>
           </Avatar>
         </Button>
@@ -35,7 +39,7 @@ export const UserMenu = () => {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <div className="flex items-center justify-start gap-2 p-2">
           <div className="flex flex-col space-y-1 leading-none">
-            <p className="font-medium">{user.user_metadata?.full_name || 'User'}</p>
+            <p className="font-medium">{fullName || 'User'}</p>
             <p className="w-[200px] truncate text-sm text-muted-foreground">
               {user.email}
             </p>

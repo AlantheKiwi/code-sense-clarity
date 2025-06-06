@@ -1,19 +1,10 @@
 
 import { useState, useEffect, createContext, useContext } from 'react';
-
-// Mock User type to replace Supabase User
-interface MockUser {
-  id: string;
-  email: string;
-  user_metadata: {
-    avatar_url: string;
-    full_name: string;
-    user_name: string;
-  };
-}
+import { supabase } from '@/integrations/supabase/client';
+import type { User } from '@supabase/supabase-js';
 
 interface AuthContextType {
-  user: MockUser | null;
+  user: User | null;
   loading: boolean;
   signInWithGitHub: () => Promise<void>;
   signOut: () => Promise<void>;
@@ -22,32 +13,50 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<MockUser | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mock authentication for now - will be replaced with actual Supabase auth
-    setLoading(false);
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const signInWithGitHub = async () => {
     console.log('Starting GitHub OAuth flow...');
-    // Mock successful login for now
-    const mockUser: MockUser = {
-      id: '1',
-      email: 'user@example.com',
-      user_metadata: {
-        avatar_url: 'https://github.com/github.png',
-        full_name: 'GitHub User',
-        user_name: 'githubuser'
-      }
-    };
-    setUser(mockUser);
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        scopes: 'repo read:user',
+        redirectTo: `${window.location.origin}/connect`,
+      },
+    });
+
+    if (error) {
+      console.error('Error signing in with GitHub:', error);
+      throw error;
+    }
   };
 
   const signOut = async () => {
     console.log('Signing out...');
-    setUser(null);
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error('Error signing out:', error);
+      throw error;
+    }
   };
 
   return (

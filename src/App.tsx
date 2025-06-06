@@ -8,8 +8,9 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
-import Analyze from "./pages/Analyze";
 import Connect from "./pages/Connect";
+import Dashboard from "./pages/Dashboard";
+import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,15 +30,24 @@ const App = () => (
                 <Connect />
               </ProtectedRoute>
             } />
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            <Route path="/analysis/:repoName" element={
+              <ProtectedRoute>
+                <Analysis />
+              </ProtectedRoute>
+            } />
             <Route path="/analyze" element={
               <ProtectedRoute>
-                <Analyze />
+                <Analysis />
               </ProtectedRoute>
             } />
             <Route path="/how-it-works" element={<Index />} />
             <Route path="/demo" element={<Index />} />
             <Route path="/contact" element={<Index />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

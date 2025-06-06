@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,22 +13,25 @@ import {
   CheckCircle,
   Github
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { UserMenu } from "@/components/UserMenu";
 
 const Index = () => {
   const { user, signInWithGitHub } = useAuth();
+  const navigate = useNavigate();
 
   const handleAnalyzeCode = async () => {
     if (user) {
-      // User is already authenticated, go to connect page
-      window.location.href = '/connect';
+      // User is already authenticated, go to dashboard
+      navigate('/dashboard');
     } else {
       // Start GitHub authentication
-      await signInWithGitHub();
-      // After successful auth, redirect to connect page
-      window.location.href = '/connect';
+      try {
+        await signInWithGitHub();
+      } catch (error) {
+        console.error('Authentication error:', error);
+      }
     }
   };
 
@@ -57,7 +61,7 @@ const Index = () => {
               {user ? (
                 <>
                   <Button variant="ghost" asChild>
-                    <Link to="/connect">Dashboard</Link>
+                    <Link to="/dashboard">Dashboard</Link>
                   </Button>
                   <UserMenu />
                 </>
@@ -112,7 +116,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Problems Section */}
       <section className="px-4 sm:px-6 lg:px-8 py-16 bg-white/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -152,7 +155,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="px-4 sm:px-6 lg:px-8 py-16">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -189,7 +191,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* How It Works Section */}
       <section id="how-it-works" className="px-4 sm:px-6 lg:px-8 py-16 bg-white/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
@@ -240,7 +241,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="border-t bg-white/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
