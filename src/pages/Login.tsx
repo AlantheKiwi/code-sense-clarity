@@ -2,14 +2,15 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Github, Code, AlertCircle, ExternalLink } from "lucide-react";
+import { Github, Code, AlertCircle, ExternalLink, Copy, CheckCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Login = () => {
   const { user, signInWithGitHub, loading, error, clearError } = useAuth();
   const navigate = useNavigate();
+  const [copiedUrl, setCopiedUrl] = useState<string | null>(null);
 
   // Redirect if already logged in
   useEffect(() => {
@@ -29,6 +30,16 @@ const Login = () => {
     }
   };
 
+  const copyToClipboard = async (text: string, type: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedUrl(type);
+      setTimeout(() => setCopiedUrl(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
   // Don't render login form if user is already authenticated
   if (user) {
     return null;
@@ -38,8 +49,14 @@ const Login = () => {
     error.includes('OAuth') || 
     error.includes('redirect') || 
     error.includes('configured') ||
-    error.includes('Invalid login credentials')
+    error.includes('Invalid login credentials') ||
+    error.includes('client_id') ||
+    error.includes('unauthorized_client')
   );
+
+  const currentUrl = window.location.origin;
+  const callbackUrl = "https://dtwgnqzuskdfuypigaor.supabase.co/auth/v1/callback";
+  const connectUrl = `${currentUrl}/connect`;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 flex items-center justify-center px-4">
@@ -72,26 +89,81 @@ const Login = () => {
             )}
             
             {isConfigurationError && (
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 space-y-3">
-                <h3 className="font-semibold text-yellow-900">Configuration Required</h3>
-                <p className="text-sm text-yellow-800">
-                  GitHub OAuth needs to be configured in your Supabase project:
-                </p>
-                <ol className="text-sm text-yellow-800 list-decimal list-inside space-y-1">
-                  <li>Go to Authentication → Providers in Supabase</li>
-                  <li>Enable GitHub provider</li>
-                  <li>Set up GitHub OAuth app credentials</li>
-                  <li>Configure Site URL and Redirect URLs</li>
-                </ol>
-                <div className="flex space-x-2">
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    onClick={() => window.open('https://supabase.com/dashboard/project/dtwgnqzuskdfuypigaor/auth/providers', '_blank')}
-                  >
-                    <ExternalLink className="h-3 w-3 mr-1" />
-                    Supabase Auth
-                  </Button>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 space-y-4">
+                <h3 className="font-semibold text-yellow-900">🔧 Configuration Required</h3>
+                
+                <div className="space-y-3">
+                  <div>
+                    <p className="text-sm font-medium text-yellow-800 mb-2">Step 1: GitHub OAuth App</p>
+                    <div className="text-xs text-yellow-700 space-y-1">
+                      <p>• Go to GitHub → Settings → Developer settings → OAuth Apps</p>
+                      <p>• Create new OAuth app with these settings:</p>
+                      <div className="bg-yellow-100 p-2 rounded border">
+                        <p><strong>Homepage URL:</strong></p>
+                        <div className="flex items-center gap-1 mt-1">
+                          <code className="text-xs bg-white px-1 rounded flex-1">{currentUrl}</code>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => copyToClipboard(currentUrl, 'homepage')}
+                            className="h-6 w-6 p-0"
+                          >
+                            {copiedUrl === 'homepage' ? <CheckCircle className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                          </Button>
+                        </div>
+                        <p className="mt-2"><strong>Callback URL:</strong></p>
+                        <div className="flex items-center gap-1 mt-1">
+                          <code className="text-xs bg-white px-1 rounded flex-1">{callbackUrl}</code>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => copyToClipboard(callbackUrl, 'callback')}
+                            className="h-6 w-6 p-0"
+                          >
+                            {copiedUrl === 'callback' ? <CheckCircle className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-sm font-medium text-yellow-800 mb-2">Step 2: Supabase Configuration</p>
+                    <div className="text-xs text-yellow-700 space-y-1">
+                      <p>• Go to Supabase → Authentication → URL Configuration:</p>
+                      <div className="bg-yellow-100 p-2 rounded border">
+                        <p><strong>Site URL:</strong></p>
+                        <div className="flex items-center gap-1 mt-1">
+                          <code className="text-xs bg-white px-1 rounded flex-1">{currentUrl}</code>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => copyToClipboard(currentUrl, 'site')}
+                            className="h-6 w-6 p-0"
+                          >
+                            {copiedUrl === 'site' ? <CheckCircle className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                          </Button>
+                        </div>
+                        <p className="mt-2"><strong>Redirect URLs:</strong></p>
+                        <div className="flex items-center gap-1 mt-1">
+                          <code className="text-xs bg-white px-1 rounded flex-1">{connectUrl}</code>
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={() => copyToClipboard(connectUrl, 'redirect')}
+                            className="h-6 w-6 p-0"
+                          >
+                            {copiedUrl === 'redirect' ? <CheckCircle className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+                          </Button>
+                        </div>
+                      </div>
+                      <p>• Go to Authentication → Providers → Enable GitHub</p>
+                      <p>• Add your GitHub Client ID and Client Secret</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="flex flex-wrap gap-2">
                   <Button 
                     variant="outline" 
                     size="sm" 
@@ -99,6 +171,22 @@ const Login = () => {
                   >
                     <ExternalLink className="h-3 w-3 mr-1" />
                     GitHub OAuth
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => window.open('https://supabase.com/dashboard/project/dtwgnqzuskdfuypigaor/auth/url-configuration', '_blank')}
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    Supabase URLs
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={() => window.open('https://supabase.com/dashboard/project/dtwgnqzuskdfuypigaor/auth/providers', '_blank')}
+                  >
+                    <ExternalLink className="h-3 w-3 mr-1" />
+                    Supabase Auth
                   </Button>
                 </div>
               </div>
