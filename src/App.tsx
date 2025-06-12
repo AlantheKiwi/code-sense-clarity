@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import { AdminRoute } from "@/components/AdminRoute";
 import TopNavigation from "@/components/TopNavigation";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
@@ -31,6 +32,9 @@ import SoftrPrompts from "./pages/prompts/SoftrPrompts";
 import BoltPrompts from "./pages/prompts/BoltPrompts";
 import AirtablePrompts from "./pages/prompts/AirtablePrompts";
 import ZapierPrompts from "./pages/prompts/ZapierPrompts";
+import Admin from "./pages/Admin";
+import AdminAPIKeys from "./pages/AdminAPIKeys";
+import AdminUsers from "./pages/AdminUsers";
 
 const queryClient = new QueryClient();
 
@@ -112,6 +116,22 @@ const App = () => (
                   <ProtectedRoute>
                     <Analysis />
                   </ProtectedRoute>
+                } />
+                {/* Admin Routes */}
+                <Route path="/admin" element={
+                  <AdminRoute>
+                    <Admin />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/api-keys" element={
+                  <AdminRoute>
+                    <AdminAPIKeys />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/users" element={
+                  <AdminRoute>
+                    <AdminUsers />
+                  </AdminRoute>
                 } />
                 <Route path="/how-it-works" element={<Index />} />
                 <Route path="/contact" element={<Index />} />

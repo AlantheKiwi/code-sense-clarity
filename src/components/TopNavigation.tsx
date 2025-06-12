@@ -15,15 +15,18 @@ import {
   MessageSquare, 
   Code, 
   LogIn,
-  X
+  X,
+  Shield
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useAdmin } from "@/hooks/useAdmin";
 import { UserMenu } from "@/components/UserMenu";
 
 const TopNavigation = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { isAdmin } = useAdmin();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigationItems = [
@@ -32,6 +35,16 @@ const TopNavigation = () => {
     { icon: MessageSquare, label: 'Useful Prompts', path: '/useful-prompts' },
     { icon: Code, label: 'Analyze Code', path: '/analyze', highlight: true },
   ];
+
+  // Add admin navigation item for admin users
+  if (isAdmin) {
+    navigationItems.push({
+      icon: Shield,
+      label: 'Admin Panel',
+      path: '/admin',
+      highlight: false
+    });
+  }
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -64,6 +77,8 @@ const TopNavigation = () => {
                   className={`flex items-center gap-2 ${
                     item.highlight 
                       ? 'bg-primary/10 hover:bg-primary/20 text-primary' 
+                      : item.icon === Shield
+                      ? 'bg-red-50 hover:bg-red-100 text-red-600'
                       : 'hover:bg-accent'
                   }`}
                 >
@@ -72,6 +87,11 @@ const TopNavigation = () => {
                   {item.highlight && (
                     <Badge variant="secondary" className="text-xs">
                       New
+                    </Badge>
+                  )}
+                  {item.icon === Shield && (
+                    <Badge variant="secondary" className="text-xs bg-red-100 text-red-700">
+                      Admin
                     </Badge>
                   )}
                 </Button>
@@ -135,6 +155,8 @@ const TopNavigation = () => {
                     className={`w-full justify-start flex items-center gap-3 ${
                       item.highlight 
                         ? 'bg-primary/10 hover:bg-primary/20 text-primary' 
+                        : item.icon === Shield
+                        ? 'bg-red-50 hover:bg-red-100 text-red-600'
                         : 'hover:bg-accent'
                     }`}
                   >
@@ -143,6 +165,11 @@ const TopNavigation = () => {
                     {item.highlight && (
                       <Badge variant="secondary" className="ml-auto text-xs">
                         New
+                      </Badge>
+                    )}
+                    {item.icon === Shield && (
+                      <Badge variant="secondary" className="ml-auto text-xs bg-red-100 text-red-700">
+                        Admin
                       </Badge>
                     )}
                   </Button>
