@@ -29,13 +29,13 @@ const APIKeys = () => {
       if (!user) return;
 
       const { data, error } = await supabase
-        .from('api_key_configs')
+        .from('api_key_configs' as any)
         .select('*')
         .eq('user_id', user.id);
 
       if (error) throw error;
       setConfigs(data || []);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching API keys:', error);
       toast({
         title: "Error",
@@ -59,7 +59,7 @@ const APIKeys = () => {
 
       if (existingConfig) {
         const { error } = await supabase
-          .from('api_key_configs')
+          .from('api_key_configs' as any)
           .update({
             api_key: apiKey,
             is_enabled: enabled,
@@ -70,7 +70,7 @@ const APIKeys = () => {
         if (error) throw error;
       } else {
         const { error } = await supabase
-          .from('api_key_configs')
+          .from('api_key_configs' as any)
           .insert({
             tool_name: toolId,
             tool_category: tool.category,
@@ -83,7 +83,7 @@ const APIKeys = () => {
       }
 
       await fetchAPIKeys();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error saving API key:', error);
       throw error;
     }
