@@ -19,7 +19,9 @@ import {
   Eye,
   ZapOff,
   RefreshCw,
-  Copy
+  Copy,
+  MessageCircle,
+  Zap
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { UserMenu } from "@/components/UserMenu";
@@ -28,6 +30,8 @@ import { useToast } from "@/hooks/use-toast";
 import { detectPlatform, getPlatformBadgeColor, PlatformInfo } from "@/utils/platformDetection";
 import { analyzeLovableProject, analyzeBubbleProject, analyzeUniversalNoCodeIssues } from "@/utils/platformAnalyzers";
 import { GitHubService } from "@/services/githubService";
+import AIChatInterface from "@/components/AIChatInterface";
+import IntelligentFixSuggestions from "@/components/IntelligentFixSuggestions";
 
 interface CodeIssue {
   id: string;
@@ -71,6 +75,8 @@ const Analysis = () => {
   const [currentFile, setCurrentFile] = useState('');
   const [showCodeViewer, setShowCodeViewer] = useState(false);
   const [platformInfo, setPlatformInfo] = useState<PlatformInfo | null>(null);
+  const [showAIChat, setShowAIChat] = useState(false);
+  const [showIntelligentFix, setShowIntelligentFix] = useState(false);
 
   useEffect(() => {
     if (repoName) {
@@ -545,6 +551,14 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
                 <Download className="mr-2 h-4 w-4" />
                 Export Report
               </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowAIChat(!showAIChat)}
+                className={showAIChat ? 'bg-blue-50 text-blue-700' : ''}
+              >
+                <MessageCircle className="mr-2 h-4 w-4" />
+                AI Assistant
+              </Button>
               <UserMenu />
             </div>
           </div>
@@ -564,7 +578,7 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
             )}
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Code Analysis Results
+            AI-Powered Code Analysis
           </h1>
           <div className="flex items-center gap-4 text-sm text-gray-600">
             <div className="flex items-center gap-1">
@@ -584,34 +598,44 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
           </div>
         </div>
 
+        {/* AI Chat Interface */}
+        {showAIChat && (
+          <div className="mb-8">
+            <AIChatInterface 
+              analysisData={analysisData}
+              context={{ platform: platformInfo, issues }}
+            />
+          </div>
+        )}
+
         {/* Platform-Specific Recommendations */}
         {platformInfo && platformInfo.type !== 'unknown' && (
           <Card className="mb-8 border-blue-200 bg-blue-50">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-blue-900">
                 <Lightbulb className="h-5 w-5" />
-                Platform-Specific Recommendations
+                AI-Enhanced Platform Recommendations
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2 text-sm text-blue-800">
                 {platformInfo.type === 'lovable' && (
                   <>
-                    <p>• Ask AI to refactor large components into smaller, focused pieces</p>
-                    <p>• Use Supabase integration for secure database access with RLS policies</p>
-                    <p>• Remove unused Shadcn/ui components to optimize bundle size</p>
+                    <p>• AI suggests refactoring large components into smaller, focused pieces</p>
+                    <p>• Implement AI-powered Supabase integration with secure RLS policies</p>
+                    <p>• Use AI to identify and remove unused Shadcn/ui components</p>
                   </>
                 )}
                 {platformInfo.type === 'bubble' && (
                   <>
-                    <p>• Add search constraints to database queries in repeating groups</p>
-                    <p>• Break complex workflows into reusable custom events</p>
-                    <p>• Set up proper privacy rules for sensitive data</p>
+                    <p>• AI recommends adding search constraints to database queries</p>
+                    <p>• Break complex workflows using AI pattern detection</p>
+                    <p>• AI-assisted privacy rule optimization for sensitive data</p>
                   </>
                 )}
                 <div className="mt-3">
                   <Button variant="outline" size="sm" asChild>
-                    <Link to="/platform-health">View Platform Health Dashboard</Link>
+                    <Link to="/platform-health">View AI Platform Health Dashboard</Link>
                   </Button>
                 </div>
               </div>
@@ -630,7 +654,7 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-red-900">{analysisData?.critical_issues || 0}</div>
-              <p className="text-sm text-red-700">Must fix to prevent build failures</p>
+              <p className="text-sm text-red-700">AI-detected critical problems</p>
             </CardContent>
           </Card>
 
@@ -643,7 +667,7 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-yellow-900">{analysisData?.warnings || 0}</div>
-              <p className="text-sm text-yellow-700">Should fix for better code quality</p>
+              <p className="text-sm text-yellow-700">AI-identified improvements</p>
             </CardContent>
           </Card>
 
@@ -651,20 +675,20 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
             <CardHeader className="pb-3">
               <CardTitle className="text-lg flex items-center gap-2 text-blue-800">
                 <Lightbulb className="h-5 w-5" />
-                Suggestions
+                AI Suggestions
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold text-blue-900">{analysisData?.suggestions || 0}</div>
-              <p className="text-sm text-blue-700">Optimization opportunities</p>
+              <p className="text-sm text-blue-700">Smart optimization opportunities</p>
             </CardContent>
           </Card>
         </div>
 
-        {/* Issues List */}
+        {/* Issues List and AI Fix Suggestions */}
         <div className="grid lg:grid-cols-2 gap-8">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Issues Found</h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">AI-Detected Issues</h2>
             <div className="space-y-4">
               {issues.map((issue) => (
                 <Card 
@@ -703,93 +727,124 @@ ${suggestionIssues.map(issue => `- **${issue.title}** in ${issue.file_path}`).jo
                         <span>~{issue.estimated_fix_time} to fix</span>
                       </div>
                     )}
+                    <div className="mt-3">
+                      <Button 
+                        size="sm" 
+                        variant="outline"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedIssue(issue);
+                          setShowIntelligentFix(true);
+                        }}
+                      >
+                        <Zap className="mr-1 h-3 w-3" />
+                        Get AI Fix
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
             </div>
           </div>
 
-          {/* Enhanced Issue Details */}
+          {/* Enhanced Issue Details with AI Fixes */}
           <div>
             {selectedIssue ? (
-              <Card className="sticky top-6">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    {getIssueIcon(selectedIssue.issue_type)}
-                    Issue Details
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-gray-900">{selectedIssue.title}</h4>
-                    <p className="text-sm text-gray-600 mt-1">{selectedIssue.file_path}</p>
-                    {selectedIssue.line_number && (
-                      <p className="text-xs text-gray-500">Line {selectedIssue.line_number}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <h5 className="font-medium text-gray-900 mb-2">Problem Description</h5>
-                    <p className="text-sm text-gray-600">{selectedIssue.description}</p>
-                  </div>
-
-                  {selectedIssue.why_matters && (
+              <div className="space-y-6">
+                <Card className="sticky top-6">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      {getIssueIcon(selectedIssue.issue_type)}
+                      Issue Details
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
                     <div>
-                      <h5 className="font-medium text-gray-900 mb-2">Why This Matters</h5>
-                      <div className="bg-amber-50 border border-amber-200 p-3 rounded-lg">
-                        <p className="text-sm text-amber-800">{selectedIssue.why_matters}</p>
-                      </div>
+                      <h4 className="font-semibold text-gray-900">{selectedIssue.title}</h4>
+                      <p className="text-sm text-gray-600 mt-1">{selectedIssue.file_path}</p>
+                      {selectedIssue.line_number && (
+                        <p className="text-xs text-gray-500">Line {selectedIssue.line_number}</p>
+                      )}
                     </div>
-                  )}
 
-                  {selectedIssue.code_snippet && (
                     <div>
-                      <h5 className="font-medium text-gray-900 mb-2">Current Code</h5>
-                      <div className="bg-gray-50 border p-3 rounded-lg">
-                        <pre className="text-xs text-gray-800 whitespace-pre-wrap">{selectedIssue.code_snippet}</pre>
-                      </div>
+                      <h5 className="font-medium text-gray-900 mb-2">AI Analysis</h5>
+                      <p className="text-sm text-gray-600">{selectedIssue.description}</p>
                     </div>
-                  )}
 
-                  {selectedIssue.fixed_code && (
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <h5 className="font-medium text-gray-900">Suggested Fix</h5>
-                        <Button 
-                          size="sm" 
-                          variant="outline"
-                          onClick={() => copyFixedCode(selectedIssue.fixed_code!)}
-                        >
-                          <Copy className="h-3 w-3 mr-1" />
-                          Copy
-                        </Button>
-                      </div>
-                      <div className="bg-green-50 border border-green-200 p-3 rounded-lg">
-                        <pre className="text-xs text-green-800 whitespace-pre-wrap">{selectedIssue.fixed_code}</pre>
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-between text-sm pt-4 border-t">
-                    {selectedIssue.estimated_fix_time && (
-                      <div className="flex items-center gap-1 text-gray-500">
-                        <Clock className="h-3 w-3" />
-                        <span>{selectedIssue.estimated_fix_time}</span>
+                    {selectedIssue.why_matters && (
+                      <div>
+                        <h5 className="font-medium text-gray-900 mb-2">Why This Matters</h5>
+                        <div className="bg-amber-50 border border-amber-200 p-3 rounded-lg">
+                          <p className="text-sm text-amber-800">{selectedIssue.why_matters}</p>
+                        </div>
                       </div>
                     )}
-                    {selectedIssue.difficulty_level && (
-                      <Badge variant="outline" className="text-xs">
-                        {selectedIssue.difficulty_level} difficulty
-                      </Badge>
+
+                    {selectedIssue.code_snippet && (
+                      <div>
+                        <h5 className="font-medium text-gray-900 mb-2">Current Code</h5>
+                        <div className="bg-gray-50 border p-3 rounded-lg">
+                          <pre className="text-xs text-gray-800 whitespace-pre-wrap">{selectedIssue.code_snippet}</pre>
+                        </div>
+                      </div>
                     )}
-                  </div>
-                </CardContent>
-              </Card>
+
+                    {selectedIssue.fixed_code && (
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <h5 className="font-medium text-gray-900">Basic Fix</h5>
+                          <Button 
+                            size="sm" 
+                            variant="outline"
+                            onClick={() => copyFixedCode(selectedIssue.fixed_code!)}
+                          >
+                            <Copy className="h-3 w-3 mr-1" />
+                            Copy
+                          </Button>
+                        </div>
+                        <div className="bg-green-50 border border-green-200 p-3 rounded-lg">
+                          <pre className="text-xs text-green-800 whitespace-pre-wrap">{selectedIssue.fixed_code}</pre>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-between text-sm pt-4 border-t">
+                      {selectedIssue.estimated_fix_time && (
+                        <div className="flex items-center gap-1 text-gray-500">
+                          <Clock className="h-3 w-3" />
+                          <span>{selectedIssue.estimated_fix_time}</span>
+                        </div>
+                      )}
+                      {selectedIssue.difficulty_level && (
+                        <Badge variant="outline" className="text-xs">
+                          {selectedIssue.difficulty_level} difficulty
+                        </Badge>
+                      )}
+                    </div>
+
+                    <Button 
+                      className="w-full" 
+                      onClick={() => setShowIntelligentFix(!showIntelligentFix)}
+                    >
+                      <Zap className="mr-2 h-4 w-4" />
+                      Get AI-Powered Smart Fixes
+                    </Button>
+                  </CardContent>
+                </Card>
+
+                {showIntelligentFix && selectedIssue && (
+                  <IntelligentFixSuggestions 
+                    issue={selectedIssue}
+                    platformInfo={platformInfo}
+                  />
+                )}
+              </div>
             ) : (
               <Card className="text-center py-12 text-gray-500">
                 <CardContent>
                   <FileText className="mx-auto h-12 w-12 text-gray-300 mb-4" />
-                  <p>Select an issue to view details and fixes</p>
+                  <p>Select an issue to view AI-powered details and smart fixes</p>
                 </CardContent>
               </Card>
             )}
