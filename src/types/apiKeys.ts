@@ -2,7 +2,7 @@
 export interface APIKeyConfig {
   id: string;
   tool_name: string;
-  tool_category: 'ai_analysis' | 'debugging' | 'code_quality' | 'performance' | 'security';
+  tool_category: string; // Changed from union type to string to match database
   api_key: string;
   is_enabled: boolean;
   created_at: string;
