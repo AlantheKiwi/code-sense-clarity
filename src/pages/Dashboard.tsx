@@ -9,7 +9,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import SubscriptionBanner from "@/components/SubscriptionBanner";
-import { toast } from "react-toastify";
+import { useToast } from "@/hooks/use-toast";
 
 interface Repository {
   id: number;
@@ -26,6 +26,7 @@ interface Repository {
 const Dashboard = () => {
   const { user, session } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
   const [repositories, setRepositories] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
@@ -74,11 +75,6 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const analyzeRepository = async (repo: Repository) => {
-    console.log('Starting analysis for:', repo.full_name);
-    navigate(`/analysis/${encodeURIComponent(repo.full_name)}`);
   };
 
   const handleAnalyzeRepo = async (repo: Repository) => {
@@ -309,9 +305,10 @@ const Dashboard = () => {
                   <Button 
                     onClick={() => handleAnalyzeRepo(repo)}
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                    disabled={analyzing === repo.full_name}
                   >
                     <GitBranch className="mr-2 h-4 w-4" />
-                    Analyze Repository
+                    {analyzing === repo.full_name ? 'Starting Analysis...' : 'Analyze Repository'}
                   </Button>
                 </CardContent>
               </Card>
