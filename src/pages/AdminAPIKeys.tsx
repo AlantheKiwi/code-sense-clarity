@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Key, ArrowLeft, Shield, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAdmin } from "@/hooks/useAdmin";
+import { useAuth } from "@/hooks/useAuth";
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from "@/hooks/use-toast";
 import APIKeysToolsTabs from "@/components/APIKeysToolsTabs";
@@ -15,6 +16,7 @@ import { AVAILABLE_TOOLS, Tool, APIKeyConfig } from "@/types/apiKeys";
 const AdminAPIKeys = () => {
   const navigate = useNavigate();
   const { isAdmin } = useAdmin();
+  const { user } = useAuth();
   const { toast } = useToast();
   const [systemConfigs, setSystemConfigs] = useState<APIKeyConfig[]>([]);
   const [userConfigs, setUserConfigs] = useState<APIKeyConfig[]>([]);
@@ -61,12 +63,22 @@ const AdminAPIKeys = () => {
   };
 
   const handleSaveSystemKey = async (toolId: string, apiKey: string, enabled: boolean) => {
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "User not authenticated",
+        variant: "destructive",
+      });
+      return;
+    }
+
     try {
       console.log('💾 Saving system API key for tool:', toolId);
       
       const { error } = await supabase
         .from('api_key_configs')
         .upsert({
+          user_id: user.id,
           tool_name: toolId,
           tool_category: AVAILABLE_TOOLS.find(t => t.id === toolId)?.category || 'other',
           api_key: apiKey,
@@ -83,9 +95,18 @@ const AdminAPIKeys = () => {
 
       console.log('✅ System API key saved successfully');
       await fetchAllAPIKeys();
+      
+      toast({
+        title: "Success",
+        description: `System API key for ${AVAILABLE_TOOLS.find(t => t.id === toolId)?.name} saved successfully`,
+      });
     } catch (error) {
       console.error('💥 Error in handleSaveSystemKey:', error);
-      throw error;
+      toast({
+        title: "Error",
+        description: `Failed to save system API key: ${error.message}`,
+        variant: "destructive",
+      });
     }
   };
 
