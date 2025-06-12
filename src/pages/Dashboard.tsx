@@ -9,6 +9,7 @@ import { UserMenu } from "@/components/UserMenu";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import SubscriptionBanner from "@/components/SubscriptionBanner";
+import { toast } from "react-toastify";
 
 interface Repository {
   id: number;
@@ -29,6 +30,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [analyzing, setAnalyzing] = useState<string | null>(null);
 
   useEffect(() => {
     fetchRepositories();
@@ -77,6 +79,39 @@ const Dashboard = () => {
   const analyzeRepository = async (repo: Repository) => {
     console.log('Starting analysis for:', repo.full_name);
     navigate(`/analysis/${encodeURIComponent(repo.full_name)}`);
+  };
+
+  const handleAnalyzeRepo = async (repo: Repository) => {
+    if (!session?.provider_token) {
+      toast({
+        title: "GitHub Token Required",
+        description: "Please reconnect your GitHub account to analyze repositories.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      setAnalyzing(repo.full_name);
+      
+      toast({
+        title: "Analysis Started",
+        description: `Starting AI-powered analysis of ${repo.name} using GPT-4o. This may take a few minutes.`,
+      });
+      
+      // Navigate to analysis page which will start the real analysis
+      navigate(`/analysis/${encodeURIComponent(repo.full_name)}`);
+      
+    } catch (error) {
+      console.error('Error starting analysis:', error);
+      toast({
+        title: "Analysis Failed",
+        description: "Failed to start repository analysis. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setAnalyzing(null);
+    }
   };
 
   const filteredRepositories = repositories.filter(repo =>
@@ -272,7 +307,7 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <Button 
-                    onClick={() => analyzeRepository(repo)}
+                    onClick={() => handleAnalyzeRepo(repo)}
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                   >
                     <GitBranch className="mr-2 h-4 w-4" />

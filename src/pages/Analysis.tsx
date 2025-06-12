@@ -27,6 +27,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { detectPlatform, getPlatformBadgeColor, PlatformInfo } from "@/utils/platformDetection";
 import { analyzeLovableProject, analyzeBubbleProject, analyzeUniversalNoCodeIssues } from "@/utils/platformAnalyzers";
+import { GitHubService } from "@/services/githubService";
 
 interface CodeIssue {
   id: string;
