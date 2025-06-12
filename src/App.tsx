@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
+import FloatingMenu from "@/components/FloatingMenu";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Demo from "./pages/Demo";
@@ -40,79 +41,82 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/demo" element={<Demo />} />
-            <Route path="/useful-prompts" element={<UsefulPrompts />} />
-            <Route path="/prompts/lovable" element={<LovablePrompts />} />
-            <Route path="/prompts/bubble" element={<BubblePrompts />} />
-            <Route path="/prompts/webflow" element={<WebflowPrompts />} />
-            <Route path="/prompts/flutterflow" element={<FlutterFlowPrompts />} />
-            <Route path="/prompts/adalo" element={<AdaloPrompts />} />
-            <Route path="/prompts/softr" element={<SoftrPrompts />} />
-            <Route path="/prompts/bolt" element={<BoltPrompts />} />
-            <Route path="/prompts/airtable" element={<AirtablePrompts />} />
-            <Route path="/prompts/zapier" element={<ZapierPrompts />} />
-            <Route path="/connect" element={
-              <ProtectedRoute>
-                <Connect />
-              </ProtectedRoute>
-            } />
-            <Route path="/dashboard" element={
-              <ProtectedRoute>
-                <Dashboard />
-              </ProtectedRoute>
-            } />
-            <Route path="/dashboard-overview" element={
-              <ProtectedRoute>
-                <DashboardOverview />
-              </ProtectedRoute>
-            } />
-            <Route path="/platform-health" element={
-              <ProtectedRoute>
-                <PlatformHealth />
-              </ProtectedRoute>
-            } />
-            <Route path="/team" element={
-              <ProtectedRoute>
-                <Team />
-              </ProtectedRoute>
-            } />
-            <Route path="/learning" element={
-              <ProtectedRoute>
-                <Learning />
-              </ProtectedRoute>
-            } />
-            <Route path="/experts" element={
-              <ProtectedRoute>
-                <Experts />
-              </ProtectedRoute>
-            } />
-            <Route path="/integrations" element={
-              <ProtectedRoute>
-                <Integrations />
-              </ProtectedRoute>
-            } />
-            <Route path="/api-keys" element={
-              <ProtectedRoute>
-                <APIKeys />
-              </ProtectedRoute>
-            } />
-            <Route path="/analysis/:repoName" element={
-              <ProtectedRoute>
-                <Analysis />
-              </ProtectedRoute>
-            } />
-            <Route path="/analyze" element={
-              <ProtectedRoute>
-                <Analysis />
-              </ProtectedRoute>
-            } />
-            <Route path="/how-it-works" element={<Index />} />
-            <Route path="/contact" element={<Index />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <div className="relative min-h-screen">
+            <FloatingMenu />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/demo" element={<Demo />} />
+              <Route path="/useful-prompts" element={<UsefulPrompts />} />
+              <Route path="/prompts/lovable" element={<LovablePrompts />} />
+              <Route path="/prompts/bubble" element={<BubblePrompts />} />
+              <Route path="/prompts/webflow" element={<WebflowPrompts />} />
+              <Route path="/prompts/flutterflow" element={<FlutterFlowPrompts />} />
+              <Route path="/prompts/adalo" element={<AdaloPrompts />} />
+              <Route path="/prompts/softr" element={<SoftrPrompts />} />
+              <Route path="/prompts/bolt" element={<BoltPrompts />} />
+              <Route path="/prompts/airtable" element={<AirtablePrompts />} />
+              <Route path="/prompts/zapier" element={<ZapierPrompts />} />
+              <Route path="/connect" element={
+                <ProtectedRoute>
+                  <Connect />
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard" element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/dashboard-overview" element={
+                <ProtectedRoute>
+                  <DashboardOverview />
+                </ProtectedRoute>
+              } />
+              <Route path="/platform-health" element={
+                <ProtectedRoute>
+                  <PlatformHealth />
+                </ProtectedRoute>
+              } />
+              <Route path="/team" element={
+                <ProtectedRoute>
+                  <Team />
+                </ProtectedRoute>
+              } />
+              <Route path="/learning" element={
+                <ProtectedRoute>
+                  <Learning />
+                </ProtectedRoute>
+              } />
+              <Route path="/experts" element={
+                <ProtectedRoute>
+                  <Experts />
+                </ProtectedRoute>
+              } />
+              <Route path="/integrations" element={
+                <ProtectedRoute>
+                  <Integrations />
+                </ProtectedRoute>
+              } />
+              <Route path="/api-keys" element={
+                <ProtectedRoute>
+                  <APIKeys />
+                </ProtectedRoute>
+              } />
+              <Route path="/analysis/:repoName" element={
+                <ProtectedRoute>
+                  <Analysis />
+                </ProtectedRoute>
+              } />
+              <Route path="/analyze" element={
+                <ProtectedRoute>
+                  <Analysis />
+                </ProtectedRoute>
+              } />
+              <Route path="/how-it-works" element={<Index />} />
+              <Route path="/contact" element={<Index />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </BrowserRouter>
       </AuthProvider>
     </TooltipProvider>
