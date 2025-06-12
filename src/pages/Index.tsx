@@ -1,24 +1,20 @@
-
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Code, Sparkles, Zap, Play } from "lucide-react";
-
 const Index = () => {
   const navigate = useNavigate();
-
   const handleAnalyzeClick = () => {
     navigate('/login');
   };
-
   const scrollToHowItWorks = () => {
     const element = document.getElementById('how-it-works');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({
+        behavior: 'smooth'
+      });
     }
   };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
+  return <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10">
@@ -34,25 +30,16 @@ const Index = () => {
           <svg width="800" height="600" viewBox="0 0 800 600" className="animate-pulse">
             <defs>
               <linearGradient id="handGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{ stopColor: "#6366F1" }} />
-                <stop offset="100%" style={{ stopColor: "#D8B4FE" }} />
+                <stop offset="0%" style={{
+                stopColor: "#6366F1"
+              }} />
+                <stop offset="100%" style={{
+                stopColor: "#D8B4FE"
+              }} />
               </linearGradient>
             </defs>
-            <path
-              d="M200,300 C200,150 400,150 400,300 C400,450 200,450 200,300 Z M600,300 C600,150 400,150 400,300 C400,450 600,450 600,300 Z"
-              fill="url(#handGradient)"
-              stroke="#A78BFA"
-              strokeWidth="4"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity="0.7"
-            />
-            <path
-              d="M250,350 L350,250 M550,350 L450,250"
-              stroke="#EDE9FE"
-              strokeWidth="3"
-              strokeLinecap="round"
-            />
+            <path d="M200,300 C200,150 400,150 400,300 C400,450 200,450 200,300 Z M600,300 C600,150 400,150 400,300 C400,450 600,450 600,300 Z" fill="url(#handGradient)" stroke="#A78BFA" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
+            <path d="M250,350 L350,250 M550,350 L450,250" stroke="#EDE9FE" strokeWidth="3" strokeLinecap="round" />
           </svg>
         </div>
       </div>
@@ -70,25 +57,13 @@ const Index = () => {
               </span>
             </div>
             <div className="flex items-center space-x-4">
-              <Button 
-                variant="ghost" 
-                className="text-white/70 hover:text-white"
-                onClick={scrollToHowItWorks}
-              >
+              <Button variant="ghost" className="text-white/70 hover:text-white" onClick={scrollToHowItWorks}>
                 How it works
               </Button>
-              <Button 
-                variant="ghost" 
-                className="text-white/70 hover:text-white"
-                onClick={() => navigate('/demo')}
-              >
+              <Button variant="ghost" className="text-white/70 hover:text-white" onClick={() => navigate('/demo')}>
                 Demo
               </Button>
-              <Button 
-                variant="ghost" 
-                className="text-white/70 hover:text-white"
-                onClick={() => navigate('/useful-prompts')}
-              >
+              <Button variant="ghost" className="text-white/70 hover:text-white" onClick={() => navigate('/useful-prompts')}>
                 Useful Prompts
               </Button>
               <Button variant="ghost" className="text-white/70 hover:text-white">
@@ -124,20 +99,11 @@ const Index = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-                <Button 
-                  size="lg" 
-                  onClick={handleAnalyzeClick}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold shadow-lg shadow-blue-500/25 border-0"
-                >
+                <Button size="lg" onClick={handleAnalyzeClick} className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-semibold shadow-lg shadow-blue-500/25 border-0">
                   <Zap className="mr-2 h-5 w-5" />
                   Analyze My Code
                 </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-lg font-semibold"
-                  onClick={() => navigate('/demo')}
-                >
+                <Button size="lg" variant="outline" onClick={() => navigate('/demo')} className="border-white/30 hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-lg font-semibold text-yellow-300">
                   <Play className="mr-2 h-5 w-5" />
                   Watch Demo
                 </Button>
@@ -282,17 +248,11 @@ const Index = () => {
           <p className="text-xl text-white/80 mb-12">
             Start your free trial today and experience the power of AI-driven debugging.
           </p>
-          <Button 
-            size="lg"
-            onClick={handleAnalyzeClick}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-xl font-semibold shadow-lg shadow-blue-500/25 border-0"
-          >
+          <Button size="lg" onClick={handleAnalyzeClick} className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-xl font-semibold shadow-lg shadow-blue-500/25 border-0">
             Analyze My Code
           </Button>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Index;
