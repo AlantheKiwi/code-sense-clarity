@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,7 +28,7 @@ const APIKeys = () => {
       if (!user) return;
 
       const { data, error } = await supabase
-        .from('api_key_configs' as any)
+        .from('api_key_configs')
         .select('*')
         .eq('user_id', user.id);
 
@@ -59,7 +58,7 @@ const APIKeys = () => {
 
       if (existingConfig) {
         const { error } = await supabase
-          .from('api_key_configs' as any)
+          .from('api_key_configs')
           .update({
             api_key: apiKey,
             is_enabled: enabled,
@@ -70,7 +69,7 @@ const APIKeys = () => {
         if (error) throw error;
       } else {
         const { error } = await supabase
-          .from('api_key_configs' as any)
+          .from('api_key_configs')
           .insert({
             tool_name: toolId,
             tool_category: tool.category,
