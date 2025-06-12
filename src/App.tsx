@@ -17,6 +17,7 @@ import Team from "./pages/Team";
 import Learning from "./pages/Learning";
 import Experts from "./pages/Experts";
 import Integrations from "./pages/Integrations";
+import APIKeys from "./pages/APIKeys";
 import Analysis from "./pages/Analysis";
 import NotFound from "./pages/NotFound";
 import UsefulPrompts from "./pages/UsefulPrompts";
@@ -91,6 +92,11 @@ const App = () => (
             <Route path="/integrations" element={
               <ProtectedRoute>
                 <Integrations />
+              </ProtectedRoute>
+            } />
+            <Route path="/api-keys" element={
+              <ProtectedRoute>
+                <APIKeys />
               </ProtectedRoute>
             } />
             <Route path="/analysis/:repoName" element={
