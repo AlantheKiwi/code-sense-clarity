@@ -126,31 +126,6 @@ const UsefulPrompts = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900">
-      {/* Navigation */}
-      <nav className="border-b border-white/10 bg-black/20 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2 cursor-pointer" onClick={() => navigate('/')}>
-              <div className="h-8 w-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Code className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                CodeSense
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" className="text-white/70 hover:text-white" onClick={() => navigate('/')}>
-                Home
-              </Button>
-              <Button variant="ghost" className="text-white/70 hover:text-white" onClick={() => navigate('/demo')}>
-                Demo
-              </Button>
-              <Button onClick={() => navigate('/login')}>Login</Button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
