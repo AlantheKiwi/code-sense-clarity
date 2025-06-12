@@ -1,11 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Code, Sparkles, Zap, Play } from "lucide-react";
+
 const Index = () => {
   const navigate = useNavigate();
+
   const handleAnalyzeClick = () => {
     navigate('/login');
   };
+
   const scrollToHowItWorks = () => {
     const element = document.getElementById('how-it-works');
     if (element) {
@@ -14,7 +17,9 @@ const Index = () => {
       });
     }
   };
-  return <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 relative overflow-hidden">
       {/* Animated background elements */}
       <div className="absolute inset-0">
         <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10">
@@ -30,12 +35,8 @@ const Index = () => {
           <svg width="800" height="600" viewBox="0 0 800 600" className="animate-pulse">
             <defs>
               <linearGradient id="handGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" style={{
-                stopColor: "#6366F1"
-              }} />
-                <stop offset="100%" style={{
-                stopColor: "#D8B4FE"
-              }} />
+                <stop offset="0%" style={{stopColor: "#6366F1"}} />
+                <stop offset="100%" style={{stopColor: "#D8B4FE"}} />
               </linearGradient>
             </defs>
             <path d="M200,300 C200,150 400,150 400,300 C400,450 200,450 200,300 Z M600,300 C600,150 400,150 400,300 C400,450 600,450 600,300 Z" fill="url(#handGradient)" stroke="#A78BFA" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" opacity="0.7" />
@@ -44,36 +45,7 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="relative z-10 border-b border-white/10 bg-black/20 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Code className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                CodeSense
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" className="text-white/70 hover:text-white" onClick={scrollToHowItWorks}>
-                How it works
-              </Button>
-              <Button variant="ghost" className="text-white/70 hover:text-white" onClick={() => navigate('/demo')}>
-                Demo
-              </Button>
-              <Button variant="ghost" className="text-white/70 hover:text-white" onClick={() => navigate('/useful-prompts')}>
-                Useful Prompts
-              </Button>
-              <Button variant="ghost" className="text-white/70 hover:text-white">
-                Contact
-              </Button>
-              <Button onClick={() => navigate('/login')}>Login</Button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* Removed custom navigation - now using TopNavigation */}
 
       {/* Hero Section */}
       <section className="relative z-10 pt-20 pb-16 px-4 sm:px-6 lg:px-8">
@@ -132,7 +104,6 @@ const Index = () => {
             Unlock the Power of AI-Driven Debugging
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature Cards */}
             <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
               <Code className="text-blue-300 h-6 w-6 mb-4" />
               <h3 className="text-xl font-semibold text-white mb-2">Smart Issue Detection</h3>
@@ -165,7 +136,6 @@ const Index = () => {
             How It Works
           </h2>
           <div className="space-y-6">
-            {/* Steps */}
             <div className="flex items-center gap-6">
               <div className="w-12 h-12 rounded-full bg-blue-600 text-white font-bold text-xl flex items-center justify-center">
                 1
@@ -210,7 +180,6 @@ const Index = () => {
             What Our Users Say
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Testimonial Cards */}
             <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
               <p className="text-white/80 italic mb-4">
                 "CodeSense has been a game-changer for my no-code development workflow. I can now catch bugs before they make it to production!"
@@ -253,6 +222,8 @@ const Index = () => {
           </Button>
         </div>
       </section>
-    </div>;
+    </div>
+  );
 };
+
 export default Index;
