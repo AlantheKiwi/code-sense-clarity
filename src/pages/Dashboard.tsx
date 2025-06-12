@@ -1,11 +1,11 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Github, Code, Search, Calendar, GitBranch, Star, Shield, Activity } from "lucide-react";
+import { Github, Search, Calendar, GitBranch, Star } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { UserMenu } from "@/components/UserMenu";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import SubscriptionBanner from "@/components/SubscriptionBanner";
@@ -133,70 +133,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-      {/* Navigation */}
-      <nav className="border-b bg-white/80 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <div className="h-8 w-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                <Code className="h-5 w-5 text-white" />
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                CodeSense
-              </span>
-            </div>
-            <div className="hidden md:flex items-center space-x-6">
-              <Button 
-                variant="ghost" 
-                className="text-blue-600 hover:text-blue-700"
-                onClick={() => navigate('/dashboard-overview')}
-              >
-                <Activity className="mr-2 h-4 w-4" />
-                Overview
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="text-gray-600 hover:text-gray-700"
-                onClick={() => navigate('/platform-health')}
-              >
-                <Shield className="mr-2 h-4 w-4" />
-                Platform Health
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="text-gray-600 hover:text-gray-700"
-                onClick={() => navigate('/team')}
-              >
-                Team
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="text-gray-600 hover:text-gray-700"
-                onClick={() => navigate('/learning')}
-              >
-                Learning
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="text-gray-600 hover:text-gray-700"
-                onClick={() => navigate('/experts')}
-              >
-                Experts
-              </Button>
-              <Button 
-                variant="ghost" 
-                className="text-gray-600 hover:text-gray-700"
-                onClick={() => navigate('/integrations')}
-              >
-                Integrations
-              </Button>
-            </div>
-            <div className="flex items-center space-x-4">
-              <UserMenu />
-            </div>
-          </div>
-        </div>
-      </nav>
+      {/* Removed custom navigation - now using TopNavigation */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Subscription Banner */}
