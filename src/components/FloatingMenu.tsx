@@ -15,9 +15,7 @@ import {
   Play, 
   MessageSquare, 
   Code, 
-  LogIn,
-  ChevronUp,
-  ChevronDown
+  LogIn
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
@@ -26,26 +24,17 @@ import { UserMenu } from "@/components/UserMenu";
 const FloatingMenu = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
 
-  // Auto-hide on scroll down, show on scroll up
+  // Track scroll position to move menu with page
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-      
-      setLastScrollY(currentScrollY);
+      setScrollY(window.scrollY);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []);
 
   const navigationItems = [
     { icon: Home, label: 'Home', path: '/' },
@@ -60,11 +49,12 @@ const FloatingMenu = () => {
 
   return (
     <div 
-      className={`fixed top-4 right-4 z-50 transition-transform duration-300 ${
-        isVisible ? 'translate-y-0' : '-translate-y-20'
-      }`}
+      className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 transition-transform duration-100"
+      style={{
+        transform: `translateX(-50%) translateY(${scrollY * 0.5}px)`
+      }}
     >
-      <div className="bg-background/80 backdrop-blur-md border rounded-full shadow-lg px-2 py-2 flex items-center gap-2">
+      <div className="bg-background/90 backdrop-blur-md border rounded-full shadow-lg px-4 py-2 flex items-center gap-2">
         {/* Quick Navigation */}
         <div className="hidden md:flex items-center gap-1">
           {navigationItems.map((item) => {
@@ -136,12 +126,6 @@ const FloatingMenu = () => {
             <span className="hidden sm:inline">Login</span>
           </Button>
         )}
-
-        {/* Scroll Indicator */}
-        <div className="flex flex-col">
-          <ChevronUp className="h-2 w-2 text-muted-foreground" />
-          <ChevronDown className="h-2 w-2 text-muted-foreground" />
-        </div>
       </div>
     </div>
   );
